@@ -1,38 +1,44 @@
 package com.maksfood;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainWindow extends JFrame {
 
     public MainWindow() {
-        // Set the title of the window
-        super("My Application");
 
-        // Create a menu bar
-        JMenuBar menuBar = new JMenuBar();
-
-        // Create a menu
-        JMenu fileMenu = new JMenu("File");
-
-        // Add menu items to the menu
-        JMenuItem openItem = new JMenuItem("Open");
-        JMenuItem saveItem = new JMenuItem("Save");
-        JMenuItem exitItem = new JMenuItem("Exit");
-
-        // Add menu items to the menu
-        fileMenu.add(openItem);
-        fileMenu.add(saveItem);
-        fileMenu.addSeparator(); // Add a separator between the Save and Exit menu items
-        fileMenu.add(exitItem);
-
-        // Add the menu to the menu bar
-        menuBar.add(fileMenu);
-
-        // Set the menu bar for this frame
-        setJMenuBar(menuBar);
-
-        // Set the size of the window
+        // Set window properties
+        setTitle("MainWindow");
         setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create label and buttons
+        JLabel label = new JLabel("Choose an option:");
+        JButton button1 = new JButton("My Fridge");
+        JButton button2 = new JButton("Recipes");
+        JButton button3 = new JButton("Plan shopping");
+
+        // Set button properties
+        button1.setFont(new Font("Arial", Font.PLAIN, 12));
+        button2.setFont(new Font("Arial", Font.PLAIN, 12));
+        button3.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        button1.setPreferredSize(new Dimension(10, 10));
+        button2.setPreferredSize(new Dimension(10, 10));
+        button3.setPreferredSize(new Dimension(10, 10));
+
+        // Create panel to hold buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 1, 4, 4));
+        buttonPanel.add(button1);
+        buttonPanel.add(button2);
+        buttonPanel.add(button3);
+        getContentPane().setBackground(new Color(82, 7, 2));
+
+        // Add components to frame
+        setLayout(new BorderLayout());
+        add(label, BorderLayout.PAGE_START);
+        add(buttonPanel, BorderLayout.CENTER);
 
         // Set the window to be visible
         setVisible(true);
