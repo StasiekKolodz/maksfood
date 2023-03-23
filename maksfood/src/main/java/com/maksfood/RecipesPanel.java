@@ -29,11 +29,19 @@ public class RecipesPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        //TODO switch to Menu panel
+
         // Create a new panel depending on which button was pressed
         currentPanel.setVisible(false);
+
+
+        //TODO Menu class
         Menu mainWindow = new Menu();
         currentPanel = mainWindow;
-        // getContentPane().add(currentPanel);
+
+        //TODO solve for JFrame - getContentPane() is JFrame function
+        getContentPane().add(currentPanel);
         currentPanel.setVisible(true);
     }
     }
