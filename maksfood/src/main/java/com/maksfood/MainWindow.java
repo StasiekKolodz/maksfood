@@ -3,11 +3,14 @@ package com.maksfood;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class MainWindow extends JFrame implements ActionListener{
+public class MainWindow extends JFrame{
 
-    private JPanel currentPanel;
+    public JPanel currentPanel;
+    public Menu menuPanel;
+    public RecipesPanel recipesPanel;
+    public FridgePanel fridgePanel;
+    public ShoppingPanel shoppingPanel;
 
     public MainWindow() {
 
@@ -17,74 +20,16 @@ public class MainWindow extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(100,100);
 
-        // Create label and buttons
-        JLabel label = new JLabel("Choose an option:");
+        //creating panels
+        menuPanel = new Menu(new GridBagLayout(), 45, this);
+        recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
+        fridgePanel = new FridgePanel(new GridLayout(), 45, this);
+        shoppingPanel = new ShoppingPanel(new GridLayout(), 45, this);
         
-        JButton button1 = new ColorButton("My Fridge");
-        JButton button2 = new ColorButton("Recipes");
-        JButton button3 = new ColorButton("Plan shopping");
+        //setting current panel to menu panel
+        currentPanel = menuPanel;
         
-        
-        //set label properties
-        label.setForeground(new Color(165, 56, 96));
-        label.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-        
-        // Set button properties
-        button1.setPreferredSize(new Dimension(200, 60));
-        button2.setPreferredSize(new Dimension(200, 60));
-        button3.setPreferredSize(new Dimension(200, 60));
-        
-        
-        //creating button container
-        JPanel buttonPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(30,100,30,100);
-        c.ipadx = 20;
-        c.ipady = 20;
-        
-        c.gridx = 0;
-        c.gridy = 1;
-        buttonPanel.add(button1,c);
-
-        c.gridx = 0;
-        c.gridy = 2;
-        buttonPanel.add(button2,c);
-
-        c.gridx = 0;
-        c.gridy = 3;
-        buttonPanel.add(button3,c);
-
-
-        add(currentPanel);
-        
-        buttonPanel.setBackground(new Color(255, 238, 219));
-
-        
-        // Create label container
-        JPanel labelPanel = new JPanel(new GridLayout());
-        labelPanel.add(label);
-        labelPanel.setOpaque(false);
-
-
-        // Creating menu container
-        JPanel menuPanel = new RoundedPanel(new GridBagLayout(), 45);
-        menuPanel.setOpaque(false);
-        menuPanel.setBackground(new Color(255, 238, 219));
-        menuPanel.setSize(900, 1000);
-
-        GridBagConstraints d = new GridBagConstraints();
-        d.insets = new Insets(50,10,50,10);
-
-        d.gridx = 0;
-        d.gridy = 1;
-        menuPanel.add(labelPanel,d);
-
-        d.gridx = 0;
-        d.gridy = 2;
-        menuPanel.add(buttonPanel,d);
-        
-        
-        // Add components to frame
+        // Add current panel to frame
         getContentPane().setBackground(new Color(165, 56, 96));
         setLayout(new GridBagLayout());
         GridBagConstraints e = new GridBagConstraints();
@@ -92,47 +37,19 @@ public class MainWindow extends JFrame implements ActionListener{
         e.gridwidth = 1200;
         e.gridx = 0;
         e.gridy = 2;
-        add(menuPanel,e);
-
+        add(currentPanel,e);
 
         // Set the window to be visible
         setVisible(true);
     }
 
-    public void setButton(JButton buttonName){
-        buttonName.setFont(new Font("Arial", Font.BOLD, 12));
-        buttonName.setForeground(Color.WHITE);
-        buttonName.setBackground(new Color(80,7,2));
+    // general function to setup buttons
+    public void setButton(ColorButton buttonName, ActionListener l){
         buttonName.setPreferredSize(new Dimension(200, 60));
-        buttonName.addActionListener( this );
+        buttonName.addActionListener(l);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Create a new panel depending on which button was pressed
-        if (e.getActionCommand().equals("My Fridge")) {
-            FridgePanel fridgePanel = new FridgePanel();
-            currentPanel.setVisible(false);
-            currentPanel = fridgePanel;
-            getContentPane().add(currentPanel);
-            currentPanel.setVisible(true);
-
-        } else if (e.getActionCommand().equals("Recipes")) {
-            RecipesPanel recipesPanel = new RecipesPanel();
-            currentPanel.setVisible(false);
-            currentPanel = recipesPanel;
-            getContentPane().add(currentPanel);
-            currentPanel.setVisible(true);
-
-        } else if (e.getActionCommand().equals("Plan shopping")) {
-            ShoppingPanel shoppingPanel = new ShoppingPanel();
-            currentPanel.setVisible(false);
-            currentPanel = shoppingPanel;
-            getContentPane().add(currentPanel);
-            currentPanel.setVisible(true);
-        }
-    }
-
+    //running App
     public static void main(String[] args) {
         MainWindow app = new MainWindow();
     }

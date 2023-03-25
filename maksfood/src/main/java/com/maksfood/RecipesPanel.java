@@ -4,44 +4,59 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RecipesPanel extends JPanel implements ActionListener{
+public class RecipesPanel extends RoundedPanel implements ActionListener{
 
-    private JPanel currentPanel;
+    public MainWindow window;
 
     //TODO recipes panel
 
-    public RecipesPanel(){
-    JLabel recipesLabel = new JLabel("Recipes");
-    recipesLabel.setFont(new Font("Arial", Font.BOLD, 36));
-    this.add(recipesLabel);
+    public RecipesPanel(LayoutManager layout, int r, MainWindow w){
+        super(layout, r);
+        window = w;
+        
+        //creating label
+        JLabel recipesLabel = new JLabel("Recipes");
+        recipesLabel.setForeground(new Color(165, 56, 96));
+        recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
+        
+        //creating return button
+        ColorButton returnButton = new ColorButton("Return");
+        window.setButton(returnButton,this);
+        
+        //creating button and label panels
+        JPanel recipesLabelPanel = new JPanel(new GridLayout());
+        recipesLabelPanel.setOpaque(false);
+        JPanel returnButtonPanel = new JPanel(new GridLayout());
+        recipesLabelPanel.add(recipesLabel);
+        returnButtonPanel.add(returnButton);
+        recipesLabelPanel.setBounds(getVisibleRect());
+        
+        setOpaque(false);
+        setBackground(new Color(255, 238, 219));
+        setSize(900, 1000);
 
-    JButton returnButton = new JButton("Return");
-    setButton(returnButton);
+        //adding elements to RecipesPanel
+        GridBagConstraints e = new GridBagConstraints();
+        e.insets = new Insets(150,10,150,10);
+        e.gridx = 0;
+        e.gridy = 1;
+        this.add(recipesLabelPanel, e);
+        
+        e.gridx = 0;
+        e.gridy = 2;
+        this.add(returnButtonPanel, e);
     }
 
-    public void setButton(JButton buttonName){
-        buttonName.setFont(new Font("Arial", Font.BOLD, 12));
-        buttonName.setForeground(Color.WHITE);
-        buttonName.setBackground(new Color(80,7,2));
-        buttonName.setPreferredSize(new Dimension(200, 60));
-        buttonName.addActionListener( this );
-    }
 
+    // button click perform
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //TODO switch to Menu panel
 
-        // Create a new panel depending on which button was pressed
-        currentPanel.setVisible(false);
+        window.currentPanel.setVisible(false);
 
+        window.currentPanel = window.menuPanel;
 
-        //TODO Menu class
-        Menu mainWindow = new Menu();
-        currentPanel = mainWindow;
-
-        //TODO solve for JFrame - getContentPane() is JFrame function
-        getContentPane().add(currentPanel);
-        currentPanel.setVisible(true);
+        window.currentPanel.setVisible(true);
     }
     }
