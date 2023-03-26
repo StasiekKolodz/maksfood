@@ -1,5 +1,4 @@
 package com.maksfood;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,28 +8,41 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
 
-    //TODO recipes panel
-
     public ShoppingPanel(LayoutManager layout, int r, MainWindow w){
         super(layout, r);
         window = w;
-        JLabel recipesLabel = new JLabel("Shopping");
-        recipesLabel.setForeground(new Color(165, 56, 96));
-        recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-        this.add(recipesLabel);
 
+        //creating label
+        JLabel shoppingLabel = new JLabel("Shopping");
+        shoppingLabel.setForeground(new Color(165, 56, 96));
+        shoppingLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
+        
+        //creating return button
         ColorButton returnButton = new ColorButton("Return");
-        setButton(returnButton);
-        this.add(returnButton);
+        window.setButton(returnButton, this);
+
+        //creating button and label panels
+        JPanel shoppingLabelPanel = new JPanel(new GridBagLayout());
+        shoppingLabelPanel.setOpaque(false);
+        JPanel returnButtonPanel = new JPanel(new GridLayout());
+        shoppingLabelPanel.add(shoppingLabel);
+        returnButtonPanel.add(returnButton);
+        shoppingLabel.setBounds(getVisibleRect());
 
         setOpaque(false);
         setBackground(new Color(255, 238, 219));
         setSize(900, 1000);
-    }
 
-    public void setButton(ColorButton buttonName){
-        buttonName.setPreferredSize(new Dimension(200, 60));
-        buttonName.addActionListener( this );
+        //adding elements to ShoppingPanel
+        GridBagConstraints e = new GridBagConstraints();
+        e.insets = new Insets(150,10,150,10);
+        e.gridx = 0;
+        e.gridy = 1;
+        this.add(shoppingLabelPanel, e);
+        
+        e.gridx = 0;
+        e.gridy = 2;
+        this.add(returnButtonPanel, e);
     }
 
     @Override
