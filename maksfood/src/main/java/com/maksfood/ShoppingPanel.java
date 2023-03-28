@@ -1,5 +1,4 @@
 package com.maksfood;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,8 +7,6 @@ import java.awt.event.ActionListener;
 public class ShoppingPanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
-
-    //TODO recipes panel
 
     public ShoppingPanel(LayoutManager layout, int r, MainWindow w){
         super(layout, r);
@@ -22,10 +19,10 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
-        window.setButton(returnButton,this);
-        
+        window.setButton(returnButton, this);
+
         //creating button and label panels
-        JPanel shoppingLabelPanel = new JPanel(new GridLayout());
+        JPanel shoppingLabelPanel = new JPanel(new GridBagLayout());
         shoppingLabelPanel.setOpaque(false);
         JPanel returnButtonPanel = new JPanel(new GridLayout());
         shoppingLabelPanel.add(shoppingLabel);

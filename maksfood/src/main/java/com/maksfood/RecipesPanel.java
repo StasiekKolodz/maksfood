@@ -8,8 +8,6 @@ public class RecipesPanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
 
-    //TODO recipes panel
-
     public RecipesPanel(LayoutManager layout, int r, MainWindow w){
         super(layout, r);
         window = w;
@@ -45,7 +43,6 @@ public class RecipesPanel extends RoundedPanel implements ActionListener{
         e.gridy = 2;
         this.add(returnButtonPanel, e);
     }
-
 
     // button click perform
     @Override
