@@ -66,7 +66,7 @@ public class Menu extends RoundedPanel implements ActionListener{
             // Creating menu container
             setOpaque(false);
             setBackground(new Color(255, 238, 219));
-            setSize(900, 1000);
+            setSize(800, 700);
             
             GridBagConstraints d = new GridBagConstraints();
             d.insets = new Insets(50,10,50,10);

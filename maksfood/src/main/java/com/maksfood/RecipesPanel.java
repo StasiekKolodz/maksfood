@@ -33,11 +33,10 @@ public class RecipesPanel extends RoundedPanel implements ActionListener{
         
         setOpaque(false);
         setBackground(new Color(255, 238, 219));
-        setSize(900, 1000);
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(150,10,150,10);
+        e.insets = new Insets(50,10,50,10);
         e.gridx = 0;
         e.gridy = 1;
         this.add(recipesLabelPanel, e);

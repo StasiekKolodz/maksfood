@@ -16,15 +16,16 @@ public class MainWindow extends JFrame{
 
         // Set window properties
         setTitle("MainWindow");
-        setSize(1200, 900);
+        setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(100,100);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
         //creating panels
         menuPanel = new Menu(new GridBagLayout(), 45, this);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
-        fridgePanel = new FridgePanel(new GridLayout(), 45, this);
-        shoppingPanel = new ShoppingPanel(new GridLayout(), 45, this);
+        fridgePanel = new FridgePanel(new GridBagLayout(), 45, this);
+        shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
@@ -34,7 +35,7 @@ public class MainWindow extends JFrame{
         setLayout(new GridBagLayout());
         GridBagConstraints e = new GridBagConstraints();
         e.gridheight = 900;
-        e.gridwidth = 1200;
+        e.gridwidth = 800;
         e.gridx = 0;
         e.gridy = 2;
         add(currentPanel,e);
