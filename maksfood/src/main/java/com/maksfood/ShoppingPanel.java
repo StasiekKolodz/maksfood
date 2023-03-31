@@ -15,11 +15,8 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         super(layout, r);
         window = w;
         
-        //creating label
-        JLabel shoppingLabel = new JLabel("Shopping");
-        shoppingLabel.setForeground(new Color(165, 56, 96));
-        shoppingLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-        
+        DefaultLabel shoppingLabel = new DefaultLabel("Shopping");
+
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
