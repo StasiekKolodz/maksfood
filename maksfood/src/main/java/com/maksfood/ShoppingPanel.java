@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 public class ShoppingPanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
+    public JPanel shoppingLabelPanel;
+    public JPanel returnButtonPanel;
+    public JList listsList;
 
     public ShoppingPanel(LayoutManager layout, int r, MainWindow w){
         super(layout, r);
@@ -22,12 +25,14 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         window.setButton(returnButton, this);
 
         //creating button and label panels
-        JPanel shoppingLabelPanel = new JPanel(new GridBagLayout());
+        shoppingLabelPanel = new JPanel(new GridBagLayout());
         shoppingLabelPanel.setOpaque(false);
-        JPanel returnButtonPanel = new JPanel(new GridLayout());
+        returnButtonPanel = new JPanel(new GridLayout());
         shoppingLabelPanel.add(shoppingLabel);
         returnButtonPanel.add(returnButton);
         shoppingLabelPanel.setBounds(getVisibleRect());
+
+        formListOfLists();
         
         setOpaque(false);
         setBackground(new Color(255, 238, 219));
@@ -38,10 +43,23 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         e.gridx = 0;
         e.gridy = 1;
         this.add(shoppingLabelPanel, e);
-        
+
         e.gridx = 0;
         e.gridy = 2;
+        this.add(listsList, e);
+        
+        e.gridx = 0;
+        e.gridy = 3;
         this.add(returnButtonPanel, e);
+    }
+
+    public void formListOfLists(){
+
+        // set example array
+        String example[] = {"List1", "List2", "List3"};
+        // create list
+        listsList = new JList(example);
+        listsList.setSelectedIndex(0);
     }
 
     @Override
