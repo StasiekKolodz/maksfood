@@ -35,17 +35,41 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         setBackground(new Color(255, 238, 219));
 
         //adding elements to RecipesPanel
+
+
+        ///////////////////////////////////
+        //
+        //              | Shopping
+        //              |
+        //  ListOfLists |
+        //
+        //
+        //
+        //
+        ////////////////////////////////////
+
+
         GridBagConstraints e = new GridBagConstraints();
         e.insets = new Insets(50,10,50,10);
-        e.gridx = 0;
+        e.gridx = 1;
         e.gridy = 1;
         this.add(shoppingLabelPanel, e);
+
+
+        String foo[] = {"Eggs", "Milk"};
+        JList shoppingList = new JList(foo);
+
+        formListOfLists();
 
         e.gridx = 0;
         e.gridy = 2;
         this.add(listsList, e);
+
+        e.gridx = 3;
+        e.gridy = 2;
+        this.add(shoppingList, e);
         
-        e.gridx = 0;
+        e.gridx = 1;
         e.gridy = 3;
         this.add(returnButtonPanel, e);
     }
