@@ -149,7 +149,25 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
                     shoppingList.textField.setText("");
                 }
         }
+        else if(src == listsList.removeButton){
+            int selectedIndex = listsList.list.getSelectedIndex();
+                if (selectedIndex != -1) {
+                    String selectedItem = listsList.listModel.getElementAt(selectedIndex);
+
+                    // Remove the selected item from the first list
+                    listsList.listModel.removeElement(selectedItem);
+        }
+        else if(src == shoppingList.removeButton){
+            int selectedIndexSH = shoppingList.list.getSelectedIndex();
+                if (selectedIndexSH != -1) {
+                    String selectedItem = shoppingList.listModel.getElementAt(selectedIndex);
+
+                    // Remove the selected item from the second list
+                    shoppingList.listModel.removeElement(selectedItem);
+        }
     }
+}
+}
 
     @Override
     public void valueChanged(ListSelectionEvent e) {

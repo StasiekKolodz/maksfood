@@ -10,6 +10,7 @@ public class ListContainer{
     public JTextField textField;
     public DefaultListModel<String> listModel;
     public ColorButton addButton;
+    public ColorButton removeButton;
 
     public ListContainer(ListSelectionListener listener, ActionListener aListener){
         this.listPanel = new JPanel();
@@ -26,12 +27,20 @@ public class ListContainer{
         this.listPanel.add(textField, BorderLayout.SOUTH);
 
         setAddButton(aListener);
+        setRemoveButton(aListener);
     }
 
     public void setAddButton(ActionListener l){
         this.addButton = new ColorButton("Add item", 15);
-        // this.addItemButton = new ColorButton("Add item", 15);
         this.listPanel.add(addButton, BorderLayout.WEST);
         this.addButton.addActionListener(l);
     }
+
+    public void setRemoveButton(ActionListener l){
+        this.removeButton = new ColorButton("Remove item", 15);
+        this.listPanel.add(removeButton, BorderLayout.EAST);
+        this.removeButton.addActionListener(l);
+    }
+
+
 }
