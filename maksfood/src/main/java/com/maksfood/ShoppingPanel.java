@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShoppingPanel extends RoundedPanel implements ActionListener{
+public class ShoppingPanel extends RoundedPanel implements ActionListener, ListSelectionListener{
 
 
     // TODO
@@ -15,20 +15,13 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
     // refactor
 
     public MainWindow window;
+
     public JPanel shoppingLabelPanel;
     public JPanel returnButtonPanel;
-    private ColorButton addButton;
-    private ColorButton addItemButton;
     private ColorButton returnButton;
-    private JTextField textListField;
-    private JTextField textShoppingField;
-    public JPanel listsListPanel;
-    public JPanel shoppingListPanel;
     
-    public JList<String> listsList;
-    public DefaultListModel<String> listsListModel;
-    public DefaultListModel<String> shoppingListModel;
-    public JList<String> shoppingList;
+    public ListContainer listsList;
+    public ListContainer shoppingList;
     
 
     public ShoppingPanel(LayoutManager layout, int r, MainWindow w){
@@ -52,21 +45,14 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         setBackground(new Color(255, 238, 219));
 
 
-        //forming both list of lists and shopping list
-        /* 
-        TODO 
-        refactor the function, so it sets only one list, which is passed as an argument
-        */
-        formLists();
+        //forming both list of lists and shopping list objects
+        listsList =  new ListContainer(this, this);
+        shoppingList =  new ListContainer(this, this);
 
-
-        // setting add button both for list of lists and shopping list
-        /* 
-        TODO 
-        refactor the function, so it sets only one button, a list is passed as an argument
-        */
-        setAddButton(this);
-
+        // setting example content of lists 
+        listsList.listModel.addElement("Tortilla");
+        listsList.listModel.addElement("StudentPack");
+        listsList.listModel.addElement("Harcerz");
 
         // setting layout of the panel
         /* 
@@ -86,8 +72,8 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         TODO 
         set the visible frames of the list
         */
-        setListAppearance(listsList);
-        setListAppearance(shoppingList);
+        setListAppearance(listsList.list);
+        setListAppearance(shoppingList.list);
 
 
     }
@@ -95,88 +81,28 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
     public void setLayout(){
 
         GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(50,10,50,10);
+        e.insets = new Insets(50,50,50,50);
         e.gridx = 1;
         e.gridy = 1;
         this.add(shoppingLabelPanel, e);
         
         e.gridx = 0;
         e.gridy = 2;
-        this.add(listsListPanel, e);
+        this.add(listsList.listPanel, e);
 
         e.gridx = 2;
         e.gridy = 2;
-        this.add(shoppingListPanel, e);
+        this.add(shoppingList.listPanel, e);
         
         e.gridx = 1;
         e.gridy = 3;
         this.add(returnButtonPanel, e);
     }
 
-    public void formLists(){
-        listsListPanel = new JPanel();
-        listsListPanel.setLayout(new BorderLayout());
 
-        shoppingListPanel = new JPanel();
-        shoppingListPanel.setLayout(new BorderLayout());
+    public void setListAppearance(JList<String> list){
 
-        textListField = new JTextField();
-        textShoppingField = new JTextField();
-
-        listsListModel = new DefaultListModel<>();
-
-        /* 
-        TODO 
-        add database for shopping lists collection
-        */
-        listsListModel.addElement("Tortilla");
-        listsListModel.addElement("StudentPack");
-        listsListModel.addElement("Harcerz");
-
-        shoppingListModel = new DefaultListModel<>();
-        
-        listsList = new JList<>(listsListModel);
-        shoppingList = new JList<>(shoppingListModel);
-
-        /* 
-        TODO 
-        refactor the function
-        */
-        listsList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedIndex = listsList.getSelectedIndex();
-                    if (selectedIndex != -1) {
-                        String selectedValue = listsListModel.get(selectedIndex);
-                        // update list 2 with selected list items
-                        shoppingListModel.clear();
-                        for (String item : getListItems(selectedValue)) {
-                            shoppingListModel.addElement(item);
-                        }
-                    }
-                }
-            }
-        });
-
-        listsListPanel.add(listsList, BorderLayout.NORTH);
-        listsListPanel.add(textListField, BorderLayout.SOUTH);
-
-        shoppingListPanel.add(shoppingList, BorderLayout.NORTH);
-        shoppingListPanel.add(textShoppingField, BorderLayout.SOUTH);
-    }
-
-    public void setAddButton(ActionListener l){
-        addButton = new ColorButton("Add item", 15);
-        addItemButton = new ColorButton("Add item", 15);
-        listsListPanel.add(addButton, BorderLayout.EAST);
-        shoppingListPanel.add(addItemButton, BorderLayout.WEST);
-        addButton.addActionListener(l);
-        addItemButton.addActionListener(l);
-    }
-
-
-    public void setListAppearance(JList list){
+        // TODO use template
         list.setForeground(new Color(165, 56, 96));
         list.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         list.setBackground(new Color(255, 238, 219));
@@ -209,19 +135,34 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         window.currentPanel = window.menuPanel;
         window.currentPanel.setVisible(true);
         }
-        else if(src == addButton){
-            String text = textListField.getText();
+        else if(src == listsList.addButton){
+            String text = listsList.textField.getText();
                 if (!text.isEmpty()) {
-                    listsListModel.addElement(text);
-                    textListField.setText("");
+                    listsList.listModel.addElement(text);
+                    listsList.textField.setText("");
                 }
         }
-        else if(src == addItemButton){
-            String text = textShoppingField.getText();
+        else if(src == shoppingList.addButton){
+            String text = shoppingList.textField.getText();
                 if (!text.isEmpty()) {
-                    shoppingListModel.addElement(text);
-                    textShoppingField.setText("");
+                    shoppingList.listModel.addElement(text);
+                    shoppingList.textField.setText("");
                 }
+        }
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            int selectedIndex = listsList.list.getSelectedIndex();
+            if (selectedIndex != -1) {
+                String selectedValue = listsList.listModel.get(selectedIndex);
+                // update list 2 with selected list items
+                shoppingList.listModel.clear();
+                for (String item : getListItems(selectedValue)) {
+                    shoppingList.listModel.addElement(item);
+                }
+            }
         }
     }
 
