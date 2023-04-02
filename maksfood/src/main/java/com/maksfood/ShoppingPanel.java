@@ -83,19 +83,19 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         GridBagConstraints e = new GridBagConstraints();
         e.insets = new Insets(50,50,50,50);
         e.gridx = 1;
-        e.gridy = 1;
+        e.gridy = 0;
         this.add(shoppingLabelPanel, e);
         
         e.gridx = 0;
-        e.gridy = 2;
+        e.gridy = 1;
         this.add(listsList.listPanel, e);
 
         e.gridx = 2;
-        e.gridy = 2;
+        e.gridy = 1;
         this.add(shoppingList.listPanel, e);
         
         e.gridx = 1;
-        e.gridy = 3;
+        e.gridy = 2;
         this.add(returnButtonPanel, e);
     }
 
@@ -157,32 +157,38 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
                     // Remove the selected item from the first list
                     listsList.listModel.removeElement(selectedItem);
         }
+    }
         else if(src == shoppingList.removeButton){
-            int selectedIndexSH = shoppingList.list.getSelectedIndex();
-                if (selectedIndexSH != -1) {
-                    String selectedItem = shoppingList.listModel.getElementAt(selectedIndex);
+            int selectedIndexSh = shoppingList.list.getSelectedIndex();
+                if (selectedIndexSh != -1) {
+                    String selectedItemSh = shoppingList.listModel.getElementAt(selectedIndexSh);
 
                     // Remove the selected item from the second list
-                    shoppingList.listModel.removeElement(selectedItem);
+                    shoppingList.listModel.removeElement(selectedItemSh);
         }
     }
-}
-}
+    }
 
+    // WARNING
+    // Changing list removes added items
+    // No save functionality!!!
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            int selectedIndex = listsList.list.getSelectedIndex();
-            if (selectedIndex != -1) {
-                String selectedValue = listsList.listModel.get(selectedIndex);
-                // update list 2 with selected list items
-                shoppingList.listModel.clear();
-                for (String item : getListItems(selectedValue)) {
-                    shoppingList.listModel.addElement(item);
+            Object src = e.getSource();
+            if (src == listsList.list) {
+                int selectedIndex = listsList.list.getSelectedIndex();
+                if (selectedIndex != -1) {
+                    String selectedValue = listsList.listModel.get(selectedIndex);
+                    // update list 2 with selected list items
+    
+                    shoppingList.listModel.clear();
+                    String[] items = getListItems(selectedValue);
+                    for (String item : items) {
+                        shoppingList.listModel.addElement(item);
+                    }
                 }
             }
         }
     }
-
-
 }

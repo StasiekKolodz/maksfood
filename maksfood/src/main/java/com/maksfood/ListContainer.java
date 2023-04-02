@@ -41,6 +41,4 @@ public class ListContainer{
         this.listPanel.add(removeButton, BorderLayout.EAST);
         this.removeButton.addActionListener(l);
     }
-
-
 }
