@@ -86,13 +86,16 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         e.gridy = 0;
         this.add(shoppingLabelPanel, e);
         
-        e.gridx = 0;
-        e.gridy = 1;
-        this.add(listsList.listPanel, e);
+        GridBagConstraints s = new GridBagConstraints();
+        s.insets = new Insets(25,25,5,5);
+        s.gridx = 0;
+        s.gridy = 1;
+        this.add(listsList.listPanel, s);
 
-        e.gridx = 2;
-        e.gridy = 1;
-        this.add(shoppingList.listPanel, e);
+        s.gridx = 2;
+        s.gridy = 1;
+        this.add(shoppingList.listPanel, s);
+
         
         e.gridx = 1;
         e.gridy = 2;
