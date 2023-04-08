@@ -11,9 +11,12 @@ public class MainWindow extends JFrame{
     public RecipesPanel recipesPanel;
     public FridgePanel fridgePanel;
     public ShoppingPanel shoppingPanel;
+    public DataBase dataBase;
 
     public MainWindow() {
-
+//      Create and connect to database
+        dataBase = new DataBase();
+        dataBase.connect("3306", "new_schema", "root", "mysql");
         // Set window properties
         setTitle("MainWindow");
         setSize(800, 700);
@@ -24,7 +27,7 @@ public class MainWindow extends JFrame{
         //creating panels
         menuPanel = new Menu(new GridBagLayout(), 45, this);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
-        fridgePanel = new FridgePanel(new GridBagLayout(), 45, this);
+        fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
         
         //setting current panel to menu panel

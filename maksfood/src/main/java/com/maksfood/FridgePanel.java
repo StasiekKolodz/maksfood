@@ -1,6 +1,11 @@
 package com.maksfood;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,14 +17,18 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
     public JList<String> fridgeList;
-    static Vector<String> v = new Vector<String>();
-    static String current;
+    public Vector<String> fridgeElements;
+    public Vector<String> productDetails;
+    public JScrollPane scrollpane;
+    public DataBase fridgeDB;
+    public JTable jt;
+    public JLabel detailsLabel;
     //TODO recipes panel
 
-    public FridgePanel(LayoutManager layout, int r, MainWindow w){
+    public FridgePanel(LayoutManager layout, int r, MainWindow w, DataBase dataBase){
         super(layout, r);
         window = w;
-        
+        fridgeDB = dataBase;
         //creating label
         JLabel fridgeLabel = new JLabel("My fridge");
         fridgeLabel.setForeground(new Color(165, 56, 96));
@@ -46,45 +55,75 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.gridx = 0;
         e.gridy = 1;
         this.add(fridgeLabelPanel, e);
-        createDbList();
+        // createDbList();
         e.gridx = 0;
         e.gridy = 2;
-        this.add(fridgeList, e);
+
+        fridgeList = new JList<String>();
         
+        ListSelectionModel select= fridgeList.getSelectionModel();  
+        select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
+        select.addListSelectionListener(new ListSelectionListener() {  
+            public void valueChanged(ListSelectionEvent e) { 
+                if (!e.getValueIsAdjusting()){
+                int index = fridgeList.getSelectedIndex();
+                fridgeDB.sqlSelect("SELECT * FROM new_schema.new_table WHERE id= " + Integer.toString(index+1));
+                productDetails = fridgeDB.getRow(1, 2, 4);
+                try{
+                for(int i=0; i<3; i++){
+                jt.setValueAt(productDetails.elementAt(i), 1,i);
+                }
+            }
+                catch(Exception k){ 
+                    }
+
+
+
+                    // productDetails.elementAt(i);
+
+                // System.out.println(created);
+
+            }
+             }});
+
+
+        // to get content pane
+
+        // String example[] = {"List1", "List2", "List3"};
+        // fridgeList.setListData(example);
+        this.add(fridgeList, e);
+        updateList(dataBase);
+        String data[][]={ {"name","amount","exp date"},{"","",""}};    
+        String column[]={"product name","amount","expiration date"};         
+        jt=new JTable(data,column); 
+
+        // jt.setBounds(30,40,200,300);  
         e.gridx = 0;
-        e.gridy = 3;
+        e.gridy = 4;       
+        this.add(jt, e);
+
+        // detailsLabel = new JLabel("details");
+
+
+        // e.gridx = 0;
+        // e.gridy = 3;
+        // this.add(detailsLabel, e);
+        e.gridx = 0;
+        e.gridy = 5;
         this.add(returnButtonPanel, e);
     }
-    public void createDbList(){
+    public void updateList(DataBase dataBase){
 
-        // set example array
-        String example[] = {"List1", "List2", "List3"};
-        // create list
-        ReadDB();
-        fridgeList = new JList<String>(v);
+        dataBase.sqlSelect("select * from new_schema.new_table");
+        fridgeElements = dataBase.getElements(5, 2);
+        // for(int i=0; i<30; i++){
+        //     fridgeElements.add("dkk");
+        // }
+        System.out.println(fridgeElements);
+        fridgeList.setListData(fridgeElements);
         fridgeList.setSelectedIndex(0);
     }
-    public void ReadDB(){
-        try{  
-            Class.forName("com.mysql.jdbc.Driver");  
-            Connection con=DriverManager.getConnection(  
-            "jdbc:mysql://localhost:3306/new_schema","root","mysql");  
-            //here sonoo is database name, root is username and password  
-            Statement stmt=con.createStatement();  
-            ResultSet rs=stmt.executeQuery("select * from new_schema.new_table");  
-            while(rs.next()){ 
-            current = rs.getString(2);
-            System.out.println("Res1");
-            System.out.println(current);  
-            System.out.println("Res2");  
-            v.add(current);
-            }
-            con.close();  
-            }
-            catch(Exception e){ 
-                System.out.println(e);
-                System.out.println("FAILED");}
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
