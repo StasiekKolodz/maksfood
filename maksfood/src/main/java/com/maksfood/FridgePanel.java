@@ -34,7 +34,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         fridgeLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();

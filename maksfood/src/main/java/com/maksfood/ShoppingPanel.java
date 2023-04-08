@@ -35,7 +35,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener{
         formListOfLists();
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();

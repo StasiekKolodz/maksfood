@@ -1,8 +1,11 @@
 package com.maksfood;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class MainWindow extends JFrame{
 
@@ -29,9 +32,16 @@ public class MainWindow extends JFrame{
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
-        
+
+        // setting background
+        try {
+           setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("resources/background.jpg")).getScaledInstance((int) dim.getWidth(), (int) dim.getHeight(), Image.SCALE_SMOOTH))));
+            }
+        catch (IOException e){
+                System.out.println("Image doesn't exist");
+            }
+
         // Add current panel to frame
-        getContentPane().setBackground(new Color(165, 56, 96));
         setLayout(new GridBagLayout());
         GridBagConstraints e = new GridBagConstraints();
         e.gridheight = 900;
