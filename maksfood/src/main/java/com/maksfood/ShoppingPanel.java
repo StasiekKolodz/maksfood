@@ -81,24 +81,26 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     public void setLayout(){
 
         GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(50,50,50,50);
-        e.gridx = 1;
+        e.insets = new Insets(10,10,10,10);
+        e.gridx = 0;
         e.gridy = 0;
+        e.gridwidth = 2;
         this.add(shoppingLabelPanel, e);
         
         GridBagConstraints s = new GridBagConstraints();
-        s.insets = new Insets(25,25,5,5);
+        s.insets = new Insets(25,25,25,25);
         s.gridx = 0;
         s.gridy = 1;
         this.add(listsList.listPanel, s);
 
-        s.gridx = 2;
+        s.gridx = 1;
         s.gridy = 1;
         this.add(shoppingList.listPanel, s);
 
         
-        e.gridx = 1;
+        e.gridx = 0;
         e.gridy = 2;
+        e.gridwidth = 2;
         this.add(returnButtonPanel, e);
     }
 
@@ -106,9 +108,9 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     public void setListAppearance(JList<String> list){
 
         // TODO use template
-        list.setForeground(new Color(165, 56, 96));
-        list.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
-        list.setBackground(new Color(255, 238, 219));
+        // list.setForeground(new Color(165, 56, 96));
+        // list.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
+        // list.setBackground(new Color(255, 238, 219));
 
     }
     // returns a list of items for the given list name

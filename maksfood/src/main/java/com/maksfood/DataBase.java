@@ -72,6 +72,21 @@ public class DataBase {
             System.out.println("GETTING DB ELEMENTS FAILED");}
         return elements;
     }
+
+    public Vector<String> getElements(int column){
+        Vector<String> elements = new Vector<String>();
+        try{
+        while(rs.next()){
+            current = rs.getString(column);
+            elements.add(current);
+        }
+        }
+        catch(Exception e){ 
+            System.out.println(e);
+            System.out.println("GETTING DB ELEMENTS FAILED");}
+        return elements;
+    }
+
     public Vector<String> getRow(int row_number, int from_column, int to_column){
 
         Vector<String> elements = new Vector<String>();
@@ -90,5 +105,6 @@ public class DataBase {
             System.out.println("GETTING DB ELEMENTS FAILED");}
         return elements;
     }
+    
 
 }                
