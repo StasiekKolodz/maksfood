@@ -11,6 +11,7 @@ public class MainWindow extends JFrame{
     public RecipesPanel recipesPanel;
     public FridgePanel fridgePanel;
     public ShoppingPanel shoppingPanel;
+    public RecipesListPanel recipesListPanel;
 
     public MainWindow() {
 
@@ -26,6 +27,7 @@ public class MainWindow extends JFrame{
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
+        recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
@@ -39,6 +41,16 @@ public class MainWindow extends JFrame{
         e.gridx = 0;
         e.gridy = 2;
         add(currentPanel,e);
+
+        // RecipesGenerator gen = new RecipesGenerator();
+        // Ingredient i = new Ingredient("tomato",Ingredient.Unit.amount, 2);
+        // Ingredient i2 = new Ingredient("pasta",Ingredient.Unit.amount, 2);
+        // // Ingredient i3 = new Ingredient("",Ingredient.Unit.amount, 4);
+        // gen.add_ingredient(i);
+        // gen.add_ingredient(i2);
+        // gen.add_ingredient(i3);
+
+        // gen.send_request_to_api();
 
         // Set the window to be visible
         setVisible(true);
