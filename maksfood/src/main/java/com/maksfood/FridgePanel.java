@@ -30,10 +30,8 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         window = w;
         fridgeDB = dataBase;
         //creating label
-        JLabel fridgeLabel = new JLabel("My fridge");
-        fridgeLabel.setForeground(new Color(165, 56, 96));
-        fridgeLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-        
+        DefaultLabel fridgeLabel = new DefaultLabel("My fridge");
+
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton,this);

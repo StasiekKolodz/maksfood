@@ -26,9 +26,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         window = w;
 
         // creating label
-        JLabel recipesLabel = new JLabel("Recipes");
-        recipesLabel.setForeground(new Color(165, 56, 96));
-        recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
+        DefaultLabel recipesLabel = new DefaultLabel("Recipes");
 
         // creating return button
         ColorButton returnButton = new ColorButton("Return");
