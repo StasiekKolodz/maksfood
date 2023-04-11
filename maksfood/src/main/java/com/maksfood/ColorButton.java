@@ -41,4 +41,31 @@ public class ColorButton extends JButton {
             }
         });
     }
+
+    public ColorButton (String text, int size) {
+        super(text);
+        setBorderPainted(false);
+        setFocusPainted(false);
+
+        setContentAreaFilled(false);
+        setOpaque(true);
+
+        setBackground(normalColor);
+        setForeground(textColor);
+        setFont(new Font("DejaVu Sans Condensed", Font.BOLD, size));
+        setText(text);
+
+        addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent evt) {
+                if (getModel().isPressed()) {
+                    setBackground(pressedColor);
+                } else if (getModel().isRollover()) {
+                    setBackground(rolloverColor);
+                } else {
+                    setBackground(normalColor);
+                }
+            }
+        });
+    }
 }
