@@ -75,7 +75,10 @@ public class MainWindow extends JFrame{
         buttonName.setPreferredSize(new Dimension(200, 60));
         buttonName.addActionListener(l);
     }
-
+    public void setButton(ColorButton buttonName, ActionListener l, int width, int height){
+        buttonName.setPreferredSize(new Dimension(width, height));
+        buttonName.addActionListener(l);
+    }
     //running App
     public static void main(String[] args) {
         MainWindow app = new MainWindow();
