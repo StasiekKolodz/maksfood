@@ -3,6 +3,7 @@ package com.maksfood;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -106,6 +107,12 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         JScrollPane jsp = new JScrollPane(fridgeList);
         jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jsp.setMinimumSize(new Dimension(200,400));
+        jsp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
         this.add(jsp, e);
         updateList(dataBase);
         String data[][]={ {"name","amount","exp date"},{"","",""}};    

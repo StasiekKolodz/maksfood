@@ -1,6 +1,8 @@
 package com.maksfood;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -44,6 +46,12 @@ public class ListContainer{
 
         JScrollPane jsp = new JScrollPane(list);
         jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jsp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
         this.listPanel.add(jsp, BorderLayout.NORTH);
         this.listPanel.add(textField, BorderLayout.SOUTH);
 

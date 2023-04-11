@@ -1,6 +1,8 @@
 package com.maksfood;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 // import java.awt.event.MouseEvent;
@@ -80,6 +82,13 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setMinimumSize(new Dimension(300,400));
         scrollPane.setMaximumSize(new Dimension(300, 500));
+        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
+        // scrollPane.setVerticalScrollBar(scrollBar);
         myList.setFixedCellHeight(30);
         myList.setFixedCellWidth(300);
         window.setButton(selectButton, this);

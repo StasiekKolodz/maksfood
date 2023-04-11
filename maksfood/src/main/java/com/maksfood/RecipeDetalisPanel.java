@@ -2,6 +2,9 @@ package com.maksfood;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -55,17 +58,27 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         // ingredientList.setSize(200, 100);
         ingredientList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 17));
         ingredientList.setForeground(Color.WHITE);
-        ingredientList.setFixedCellHeight(30);
+        // ingredientList.setFixedCellHeight(60);
         ingredientList.setFixedCellWidth(400);
         ingredientList.setSelectionBackground(Color.WHITE);
         ingredientList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)ingredientList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
+        // renderer.setBounds(20, 20, 20, 20);
 
+        // renderer.setBorder(new EmptyBorder(100, 100, 100, 100));
+        // ingredient_model.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
+        ingredientList.setCellRenderer(renderer);
         ingredientScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         ingredientScrollPane.setMinimumSize(new Dimension(400,100));
         ingredientScrollPane.setMaximumSize(new Dimension(500,250));
+        ingredientScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
         // adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
         e.insets = new Insets(10, 10, 10, 10);
@@ -91,7 +104,8 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         current_recipe = window.recipesPanel.rg.recipes_list.get(index);
         ingredient_model.clear();
         for (String ing : current_recipe.ingredient_lines) {
-            ingredient_model.addElement(ing);
+            String text = String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, ing);
+            ingredient_model.addElement(text);
         }
         photo_url = new URL(current_recipe.link_to_photo);
         // URL photo_url = new URL(current_recipe.link_to_photo);

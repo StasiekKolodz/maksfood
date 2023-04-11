@@ -1,6 +1,8 @@
 package com.maksfood;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -57,6 +59,13 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
 
+        JScrollPane recipeScrollList = new JScrollPane(recipeList);
+        recipeScrollList.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
 
         // adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
@@ -67,7 +76,7 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
 
         e.gridx = 0;
         e.gridy = 1;
-        this.add(new JScrollPane(recipeList), e);
+        this.add(recipeScrollList, e);
 
         e.gridx = 0;
         e.gridy = 2;
