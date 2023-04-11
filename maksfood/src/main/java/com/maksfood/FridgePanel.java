@@ -36,14 +36,22 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
+        ColorButton addButton = new ColorButton("Add");
+        ColorButton deleteButton = new ColorButton("Delete");
         window.setButton(returnButton,this);
+        window.setButton(deleteButton,this);
+        window.setButton(addButton,this);
         
         //creating button and label panels
         JPanel fridgeLabelPanel = new JPanel(new GridLayout());
         fridgeLabelPanel.setOpaque(false);
         JPanel returnButtonPanel = new JPanel(new GridLayout());
+        JPanel addButtonPanel = new JPanel(new GridLayout());
+        JPanel deleteButtonPanel = new JPanel(new GridLayout());
         fridgeLabelPanel.add(fridgeLabel);
         returnButtonPanel.add(returnButton);
+        addButtonPanel.add(addButton);
+        deleteButtonPanel.add(deleteButton);
         fridgeLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
@@ -51,23 +59,39 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(50,10,50,10);
+        e.insets = new Insets(20,5,20,5);
         e.gridx = 0;
         e.gridy = 1;
         this.add(fridgeLabelPanel, e);
         // createDbList();
-        e.gridx = 0;
-        e.gridy = 2;
+
 
         fridgeList = new JList<String>();
-        
+        fridgeList.setBackground(new Color(165, 56, 96));
+        // myList.setSize(200, 100);
+        fridgeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
+        fridgeList.setForeground(Color.WHITE);
+        fridgeList.setFixedCellHeight(22);
+        fridgeList.setFixedCellWidth(120);
+        fridgeList.setSelectionBackground(Color.WHITE);
+        fridgeList.setSelectionForeground(new Color(165, 56, 96));
+        DefaultListCellRenderer renderer =  (DefaultListCellRenderer)fridgeList.getCellRenderer();  
+        renderer.setHorizontalAlignment(JLabel.CENTER);  
+        renderer.setVerticalAlignment(JLabel.CENTER);  
+        fridgeList.scrollRectToVisible(getBounds());
+        // fridgeList.setBounds(30,40,20,30);  
+        JScrollPane scrollPane = new JScrollPane(fridgeList);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setMinimumSize(new Dimension(300,400));
+        scrollPane.setMaximumSize(new Dimension(300, 450));
+
         ListSelectionModel select= fridgeList.getSelectionModel();  
         select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         select.addListSelectionListener(new ListSelectionListener() {  
             public void valueChanged(ListSelectionEvent e) { 
                 if (!e.getValueIsAdjusting()){
                 int index = fridgeList.getSelectedIndex();
-                fridgeDB.sqlSelect("SELECT * FROM new_schema.new_table WHERE id= " + Integer.toString(index+1));
+                fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
                 productDetails = fridgeDB.getRow(1, 2, 4);
                 try{
                 for(int i=0; i<3; i++){
@@ -91,15 +115,18 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         // String example[] = {"List1", "List2", "List3"};
         // fridgeList.setListData(example);
-        this.add(fridgeList, e);
-        updateList(dataBase);
+        e.gridx = 0;
+        e.gridy = 2;
+        this.add(scrollPane, e);
+        updateList();
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
         String column[]={"product name","amount","expiration date"};         
         jt=new JTable(data,column); 
-
+        jt.setGridColor(new Color(165, 56, 96));
+        jt.setSelectionBackground(new Color(165, 56, 96));
         // jt.setBounds(30,40,200,300);  
-        e.gridx = 0;
-        e.gridy = 4;       
+        e.gridx = 1;
+        e.gridy = 2;       
         this.add(jt, e);
 
         // detailsLabel = new JLabel("details");
@@ -111,28 +138,42 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.gridx = 0;
         e.gridy = 5;
         this.add(returnButtonPanel, e);
+        e.gridx = 1;
+        e.gridy = 4;
+        this.add(addButtonPanel, e);
+        e.gridx = 0;
+        e.gridy = 4;
+        this.add(deleteButtonPanel, e);
     }
-    public void updateList(DataBase dataBase){
+    public void updateList(){
 
-        dataBase.sqlSelect("select * from new_schema.new_table");
-        fridgeElements = dataBase.getElements(5, 2);
+        fridgeDB.sqlSelect("select * from maksfood.fridge");
+        fridgeElements = fridgeDB.getElements(10, 2);
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }
-        System.out.println(fridgeElements);
         fridgeList.setListData(fridgeElements);
         fridgeList.setSelectedIndex(0);
     }
-
+    public void deleteSelectedElement(){
+        int index = fridgeList.getSelectedIndex();
+        fridgeDB.sqlUpdate("DELETE FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
+        fridgeDB.fixIds(index+1);
+        updateList();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Return")) {
 
+            window.currentPanel.setVisible(false);
 
-        window.currentPanel.setVisible(false);
+            window.currentPanel = window.menuPanel;
 
-        window.currentPanel = window.menuPanel;
-
-        window.currentPanel.setVisible(true);
+            window.currentPanel.setVisible(true);
+        }
+        if (e.getActionCommand().equals("Delete")) {
+            deleteSelectedElement();
+        }
     }
 
 

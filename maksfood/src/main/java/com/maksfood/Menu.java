@@ -91,6 +91,7 @@ public class Menu extends RoundedPanel implements ActionListener{
                 window.currentPanel = window.fridgePanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);
+                window.fridgePanel.updateList();
     
             } else if (e.getActionCommand().equals("Recipes")) {
 

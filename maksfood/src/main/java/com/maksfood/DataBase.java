@@ -18,7 +18,7 @@ public class DataBase {
     // }
     public boolean connect(String port, String db_name, String username, String password){
         try{  
-            Class.forName("com.mysql.jdbc.Driver");  
+            // Class.forName("com.mysql.jdbc.Driver");  
             con = DriverManager.getConnection(  
             "jdbc:mysql://localhost:" + port +"/" + db_name, username, password);  
             stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,  
@@ -33,27 +33,40 @@ public class DataBase {
     }
     public void sqlSelect(String command){
 
-        try{       
-        rs= stmt.executeQuery(command); 
+        try{     
         System.out.println("EXECUTING COMMAND");
-        System.out.println(command);
+        System.out.println(command);  
+        rs= stmt.executeQuery(command); 
+
         }
         catch(Exception e){ 
             System.out.println(e);
-            System.out.println("EXECUTING COMMAND FAILED");}
+            System.out.println("EXECUTING SELECT COMMAND FAILED");}
 
     }
     public void sqlUpdate(String command){
 
-        try{       
-            stmt.executeUpdate(command); 
+        try{ 
             System.out.println("EXECUTING COMMAND");
-            System.out.println(command);
+            System.out.println(command);      
+            stmt.executeUpdate(command); 
+
         }
         catch(Exception e){ 
             System.out.println(e);
-            System.out.println("EXECUTING COMMAND FAILED");}
+            System.out.println("EXECUTING UPDATE COMMAND FAILED");}
 
+    }
+    public int getId(){
+        int current_ret = 0;
+        try{
+            rs.next();
+            current_ret = rs.getInt(1);
+        }
+        catch(Exception e){ 
+            System.out.println(e);
+            System.out.println("GETTING DB ID FAILED");}
+        return current_ret;
     }
     public Vector<String> getElements(int elements_number, int column){
         int i = 0;
@@ -87,8 +100,12 @@ public class DataBase {
         }
         catch(Exception e){ 
             System.out.println(e);
-            System.out.println("GETTING DB ELEMENTS FAILED");}
+            System.out.println("GETTING DB ROW FAILED");}
         return elements;
+    }
+    public void fixIds(int deletedId){
+        sqlUpdate("UPDATE maksfood.fridge SET id=id-1 WHERE id> " + Integer.toString(deletedId)+ " AND id!=1");
+        sqlUpdate("ALTER TABLE maksfood.fridge AUTO_INCREMENT = 1;");
     }
 
 }                
