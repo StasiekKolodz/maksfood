@@ -64,6 +64,8 @@ public class RecipesGenerator {
             JSONObject r = new JSONObject(h.get("recipe").toString());
             hits_recipes.add(r);
             String label = r.get("label").toString();
+            String photo_url = r.get("image").toString();
+            String recipe_url = r.get("url").toString();
             JSONArray ingredientLines = new JSONArray(r.get("ingredientLines").toString());
             Recipe rec = new Recipe();
             ArrayList<String> recipe_ingredient_lines = new ArrayList<String>();
@@ -72,6 +74,8 @@ public class RecipesGenerator {
             }
             rec.add_ingredeint_lines(recipe_ingredient_lines);
             rec.recipe_text = label;
+            rec.link_to_photo = photo_url;
+            rec.link_to_recipe = recipe_url;
             recipes_list.add(rec);
         }
         // System.out.println(o.toString());

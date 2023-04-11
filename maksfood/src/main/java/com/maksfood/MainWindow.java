@@ -1,8 +1,11 @@
 package com.maksfood;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class MainWindow extends JFrame{
 
@@ -13,10 +16,11 @@ public class MainWindow extends JFrame{
     public ShoppingPanel shoppingPanel;
     public DataBase dataBase;
     public RecipesListPanel recipesListPanel;
+    public RecipeDetalisPanel recipeDetalisPanel;
     public MainWindow() {
 //      Create and connect to database
         dataBase = new DataBase();
-        dataBase.connect("3306", "new_schema", "root", "mysql");
+        dataBase.connect("3306", "new_schema", "root", "M4gH5LupZ69@");
         // Set window properties
         setTitle("MainWindow");
         setSize(800, 700);
@@ -26,16 +30,24 @@ public class MainWindow extends JFrame{
 
         //creating panels
         menuPanel = new Menu(new GridBagLayout(), 45, this);
-        recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
+        recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
+        recipeDetalisPanel = new RecipeDetalisPanel(new GridBagLayout(), 45, this);
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
-        
+
+        // setting background
+        try {
+           setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("resources/background.jpg")).getScaledInstance((int) dim.getWidth(), (int) dim.getHeight(), Image.SCALE_SMOOTH))));
+            }
+        catch (IOException e){
+                System.out.println("Image doesn't exist");
+            }
+
         // Add current panel to frame
-        getContentPane().setBackground(new Color(165, 56, 96));
         setLayout(new GridBagLayout());
         GridBagConstraints e = new GridBagConstraints();
         e.gridheight = 900;

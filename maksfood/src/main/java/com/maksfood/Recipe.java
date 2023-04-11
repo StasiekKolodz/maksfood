@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Recipe {
     
-    String recipe_text;
-    List<Ingredient> ingredient_list = new ArrayList<Ingredient>();
-    List<String> ingredient_lines = new ArrayList<String>();
+    public String recipe_text;
+    public List<Ingredient> ingredient_list = new ArrayList<Ingredient>();
+    public List<String> ingredient_lines = new ArrayList<String>();
+    public String link_to_recipe;
+    public String link_to_photo;
 
     public Recipe(){
     }

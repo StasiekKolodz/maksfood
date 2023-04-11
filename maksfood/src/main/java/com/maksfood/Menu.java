@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 // import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.event.ActionEvent;
@@ -16,16 +15,11 @@ public class Menu extends RoundedPanel implements ActionListener{
         public Menu(LayoutManager layout, int r, MainWindow w){
             super(layout, r);
             window = w;
-            JLabel label = new JLabel("Choose an option:");
+            DefaultLabel label = new DefaultLabel("Choose an option:");
             
             ColorButton button1 = new ColorButton("My Fridge");
             ColorButton button2 = new ColorButton("Recipes");
             ColorButton button3 = new ColorButton("Plan shopping");
-            
-            //set label properties
-            label.setForeground(new Color(165, 56, 96));
-            label.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-            
             
             // Set button properties
             window.setButton(button1, this);
@@ -54,7 +48,7 @@ public class Menu extends RoundedPanel implements ActionListener{
     
     
             
-            buttonPanel.setBackground(new Color(255, 238, 219));
+            buttonPanel.setBackground(new Color(255, 238, 219, 0));
     
             
             // Create label container
@@ -65,7 +59,7 @@ public class Menu extends RoundedPanel implements ActionListener{
             
             // Creating menu container
             setOpaque(false);
-            setBackground(new Color(255, 238, 219));
+            setBackground(new Color(255, 238, 219, 200));
             setSize(800, 700);
             
             GridBagConstraints d = new GridBagConstraints();

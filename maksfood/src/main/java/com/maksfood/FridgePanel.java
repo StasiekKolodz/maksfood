@@ -3,6 +3,7 @@ package com.maksfood;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -30,10 +31,8 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         window = w;
         fridgeDB = dataBase;
         //creating label
-        JLabel fridgeLabel = new JLabel("My fridge");
-        fridgeLabel.setForeground(new Color(165, 56, 96));
-        fridgeLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
-        
+        DefaultLabel fridgeLabel = new DefaultLabel("My fridge");
+
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton,this);
@@ -47,19 +46,33 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         fridgeLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(50,10,50,10);
+        e.insets = new Insets(10,10,10,10);
         e.gridx = 0;
         e.gridy = 1;
         this.add(fridgeLabelPanel, e);
         // createDbList();
         e.gridx = 0;
         e.gridy = 2;
-
         fridgeList = new JList<String>();
+        fridgeList.setSelectionMode(
+            ListSelectionModel.SINGLE_SELECTION);
+        fridgeList.setBackground(new Color(165, 56, 96));
+        // fridgeList.setSize(200, 100);
+        fridgeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
+        fridgeList.setForeground(Color.WHITE);
+        // fridgeList.setFixedCellHeight(30);
+        // fridgeList.setFixedCellWidth(120);
+        fridgeList.setSelectionBackground(Color.WHITE);
+        fridgeList.setSelectionForeground(new Color(165, 56, 96));
+        fridgeList.setFixedCellWidth(200);
+        fridgeList.setFixedCellHeight(30);
+        DefaultListCellRenderer renderer =  (DefaultListCellRenderer)fridgeList.getCellRenderer();  
+        renderer.setHorizontalAlignment(JLabel.CENTER);  
+        renderer.setVerticalAlignment(JLabel.CENTER); 
         
         ListSelectionModel select= fridgeList.getSelectionModel();  
         select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
@@ -91,7 +104,16 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         // String example[] = {"List1", "List2", "List3"};
         // fridgeList.setListData(example);
-        this.add(fridgeList, e);
+        JScrollPane jsp = new JScrollPane(fridgeList);
+        jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jsp.setMinimumSize(new Dimension(200,400));
+        jsp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(76, 59, 77);
+            }
+        });
+        this.add(jsp, e);
         updateList(dataBase);
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
         String column[]={"product name","amount","expiration date"};         
@@ -113,9 +135,8 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         this.add(returnButtonPanel, e);
     }
     public void updateList(DataBase dataBase){
-
         dataBase.sqlSelect("select * from new_schema.new_table");
-        fridgeElements = dataBase.getElements(5, 2);
+        fridgeElements = dataBase.getElements(2);
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }
