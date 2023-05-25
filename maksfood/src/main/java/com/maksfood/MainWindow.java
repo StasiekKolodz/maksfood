@@ -20,7 +20,7 @@ public class MainWindow extends JFrame{
     public MainWindow() {
 //      Create and connect to database
         dataBase = new DataBase();
-        dataBase.connect("3306", "new_schema", "root", "M4gH5LupZ69@");
+        dataBase.connect("3306", "maksfood", "root", "mysql");
         // Set window properties
         setTitle("MainWindow");
         setSize(800, 700);
