@@ -174,6 +174,13 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         if (e.getActionCommand().equals("Delete")) {
             deleteSelectedElement();
         }
+
+        if (e.getActionCommand().equals("Add")) {
+            window.currentPanel.setVisible(false);
+            window.currentPanel = window.fridgeAddPanel;
+            window.getContentPane().add(window.fridgeAddPanel);
+            window.currentPanel.setVisible(true);
+        }
     }
 
 

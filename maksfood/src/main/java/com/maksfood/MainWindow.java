@@ -13,6 +13,7 @@ public class MainWindow extends JFrame{
     public ShoppingPanel shoppingPanel;
     public DataBase dataBase;
     public RecipesListPanel recipesListPanel;
+    public FridgeAddPanel fridgeAddPanel;
     public MainWindow() {
 //      Create and connect to database
         dataBase = new DataBase();
@@ -28,8 +29,10 @@ public class MainWindow extends JFrame{
         menuPanel = new Menu(new GridBagLayout(), 45, this);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
+        fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
+    
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
