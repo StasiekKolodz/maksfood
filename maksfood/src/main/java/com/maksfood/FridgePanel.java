@@ -46,7 +46,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         fridgeLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
@@ -80,7 +80,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
             public void valueChanged(ListSelectionEvent e) { 
                 if (!e.getValueIsAdjusting()){
                 int index = fridgeList.getSelectedIndex();
-                fridgeDB.sqlSelect("SELECT * FROM new_schema.new_table WHERE id= " + Integer.toString(index+1));
+                fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id= " + Integer.toString(index+1));
                 productDetails = fridgeDB.getRow(1, 2, 4);
                 try{
                 for(int i=0; i<3; i++){
@@ -135,7 +135,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         this.add(returnButtonPanel, e);
     }
     public void updateList(DataBase dataBase){
-        dataBase.sqlSelect("select * from new_schema.new_table");
+        dataBase.sqlSelect("SELECT * from maksfood.fridge");
         fridgeElements = dataBase.getElements(2);
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");

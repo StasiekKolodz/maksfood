@@ -42,7 +42,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         recipesLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         // adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
