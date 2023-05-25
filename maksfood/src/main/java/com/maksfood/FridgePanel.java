@@ -58,36 +58,11 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         //adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
-<<<<<<< HEAD
-        e.insets = new Insets(10,10,10,10);
-=======
         e.insets = new Insets(20,5,20,5);
->>>>>>> StasBranch
         e.gridx = 0;
         e.gridy = 1;
         this.add(fridgeLabelPanel, e);
         // createDbList();
-<<<<<<< HEAD
-        e.gridx = 0;
-        e.gridy = 2;
-        fridgeList = new JList<String>();
-        fridgeList.setSelectionMode(
-            ListSelectionModel.SINGLE_SELECTION);
-        fridgeList.setBackground(new Color(165, 56, 96));
-        // fridgeList.setSize(200, 100);
-        fridgeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
-        fridgeList.setForeground(Color.WHITE);
-        // fridgeList.setFixedCellHeight(30);
-        // fridgeList.setFixedCellWidth(120);
-        fridgeList.setSelectionBackground(Color.WHITE);
-        fridgeList.setSelectionForeground(new Color(165, 56, 96));
-        fridgeList.setFixedCellWidth(200);
-        fridgeList.setFixedCellHeight(30);
-        DefaultListCellRenderer renderer =  (DefaultListCellRenderer)fridgeList.getCellRenderer();  
-        renderer.setHorizontalAlignment(JLabel.CENTER);  
-        renderer.setVerticalAlignment(JLabel.CENTER); 
-        
-=======
 
 
         fridgeList = new JList<String>();
@@ -109,18 +84,13 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         scrollPane.setMinimumSize(new Dimension(300,400));
         scrollPane.setMaximumSize(new Dimension(300, 450));
 
->>>>>>> StasBranch
         ListSelectionModel select= fridgeList.getSelectionModel();  
         select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         select.addListSelectionListener(new ListSelectionListener() {  
             public void valueChanged(ListSelectionEvent e) { 
                 if (!e.getValueIsAdjusting()){
                 int index = fridgeList.getSelectedIndex();
-<<<<<<< HEAD
-                fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id= " + Integer.toString(index+1));
-=======
                 fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
->>>>>>> StasBranch
                 productDetails = fridgeDB.getRow(1, 2, 4);
                 try{
                 for(int i=0; i<3; i++){
@@ -144,24 +114,10 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         // String example[] = {"List1", "List2", "List3"};
         // fridgeList.setListData(example);
-<<<<<<< HEAD
-        JScrollPane jsp = new JScrollPane(fridgeList);
-        jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jsp.setMinimumSize(new Dimension(200,400));
-        jsp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = new Color(76, 59, 77);
-            }
-        });
-        this.add(jsp, e);
-        updateList(dataBase);
-=======
         e.gridx = 0;
         e.gridy = 2;
         this.add(scrollPane, e);
         updateList();
->>>>>>> StasBranch
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
         String column[]={"product name","amount","expiration date"};         
         jt=new JTable(data,column); 
@@ -188,16 +144,10 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.gridy = 4;
         this.add(deleteButtonPanel, e);
     }
-<<<<<<< HEAD
-    public void updateList(DataBase dataBase){
-        dataBase.sqlSelect("SELECT * from maksfood.fridge");
-        fridgeElements = dataBase.getElements(2);
-=======
     public void updateList(){
 
         fridgeDB.sqlSelect("select * from maksfood.fridge");
         fridgeElements = fridgeDB.getElements(10, 2);
->>>>>>> StasBranch
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }

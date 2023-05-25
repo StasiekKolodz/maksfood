@@ -118,13 +118,9 @@ public class DataBase {
             System.out.println("GETTING DB ROW FAILED");}
         return elements;
     }
-<<<<<<< HEAD
-    
-=======
     public void fixIds(int deletedId){
         sqlUpdate("UPDATE maksfood.fridge SET id=id-1 WHERE id> " + Integer.toString(deletedId)+ " AND id!=1");
         sqlUpdate("ALTER TABLE maksfood.fridge AUTO_INCREMENT = 1;");
     }
->>>>>>> StasBranch
 
 }                
