@@ -42,7 +42,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         returnButtonPanel.add(returnButton);
         shoppingLabelPanel.setBounds(getVisibleRect());
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
 
         //forming both list of lists and shopping list objects
