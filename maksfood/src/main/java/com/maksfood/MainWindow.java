@@ -16,7 +16,11 @@ public class MainWindow extends JFrame{
     public ShoppingPanel shoppingPanel;
     public DataBase dataBase;
     public RecipesListPanel recipesListPanel;
+<<<<<<< HEAD
     public RecipeDetalisPanel recipeDetalisPanel;
+=======
+    public FridgeAddPanel fridgeAddPanel;
+>>>>>>> StasBranch
     public MainWindow() {
 //      Create and connect to database
         dataBase = new DataBase();
@@ -31,10 +35,17 @@ public class MainWindow extends JFrame{
         //creating panels
         menuPanel = new Menu(new GridBagLayout(), 45, this);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
+<<<<<<< HEAD
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
         recipeDetalisPanel = new RecipeDetalisPanel(new GridBagLayout(), 45, this);
+=======
+        fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase);
+        shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
+        recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
+    
+>>>>>>> StasBranch
         
         //setting current panel to menu panel
         currentPanel = menuPanel;
@@ -75,7 +86,10 @@ public class MainWindow extends JFrame{
         buttonName.setPreferredSize(new Dimension(200, 60));
         buttonName.addActionListener(l);
     }
-
+    public void setButton(ColorButton buttonName, ActionListener l, int width, int height){
+        buttonName.setPreferredSize(new Dimension(width, height));
+        buttonName.addActionListener(l);
+    }
     //running App
     public static void main(String[] args) {
         MainWindow app = new MainWindow();
