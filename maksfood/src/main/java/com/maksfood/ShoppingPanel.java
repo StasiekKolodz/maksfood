@@ -129,6 +129,19 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         shoppingList.list.setSelectedIndex(0);
     }
 
+    public void updateList(){
+        int selectedIndex = listsList.list.getSelectedIndex();
+        String selectedItem = listsList.listModel.getElementAt(selectedIndex);
+
+        shoppingDB.sqlSelect("SELECT * from maksfood.shoppingList WHERE parent_list='"+selectedItem+"'");
+        listElements = shoppingDB.getElements(10, 2);
+        // for(int i=0; i<30; i++){
+        //     fridgeElements.add("dkk");
+        // }
+        shoppingList.list.setListData(listElements);
+        shoppingList.list.setSelectedIndex(0);
+    }
+
     public void updateListsList(){
 
         shoppingDB.sqlSelect("SELECT * from maksfood.listsList");
@@ -136,6 +149,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }
+        listsList.listModel.clear();
         listsList.listModel.addAll(listElements);
     }
     private String[] getListItems(String listName) {
@@ -191,16 +205,23 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
                     String selectedItem = listsList.listModel.getElementAt(selectedIndex);
 
                     // Remove the selected item from the first list
-                    listsList.listModel.removeElement(selectedItem);
+                    deleteSelectedList(selectedItem);
         }
     }
         else if(src == shoppingList.removeButton){
+            System.out.print("a !");
             int selectedIndexSh = shoppingList.list.getSelectedIndex();
+            int selectedIndex = listsList.list.getSelectedIndex();
+            System.out.print("b !");
                 if (selectedIndexSh != -1) {
-                    String selectedItemSh = shoppingList.listModel.getElementAt(selectedIndexSh);
-
+                    System.out.print(selectedIndexSh);
+                    String selectedItemSh = shoppingList.list.getSelectedValue();
+                    System.out.print("x !");
+                    String selectedItem = listsList.listModel.getElementAt(selectedIndex);
                     // Remove the selected item from the second list
-                    shoppingList.listModel.removeElement(selectedItemSh);
+                    System.out.print("d !");
+                    deleteSelectedElement(selectedItemSh, selectedItem);
+                    
         }
     }
     }
@@ -239,6 +260,15 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     public void addListsListElement(String test){
         shoppingDB.sqlUpdate("INSERT INTO maksfood.listsList VALUES(DEFAULT,'"+
         test + "');");
+        updateListsList();
+    }
+    public void deleteSelectedElement(String elem, String parent){
+        shoppingDB.sqlUpdate("DELETE FROM maksfood.shoppingList WHERE name='" + elem + "' AND parent_list='" +parent + "'");
+        updateList();
+    }
+    public void deleteSelectedList(String list){
+        shoppingDB.sqlUpdate("DELETE FROM maksfood.shoppingList WHERE parent_name='" + list + "'");
+        shoppingDB.sqlUpdate("DELETE FROM maksfood.listsList WHERE name='" + list + "'");
         updateListsList();
     }
 }
