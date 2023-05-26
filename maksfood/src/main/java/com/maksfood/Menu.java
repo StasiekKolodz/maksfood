@@ -48,7 +48,7 @@ public class Menu extends RoundedPanel implements ActionListener{
     
     
             
-            buttonPanel.setBackground(new Color(255, 238, 219));
+            buttonPanel.setBackground(new Color(255, 238, 219, 0));
     
             
             // Create label container
@@ -59,7 +59,7 @@ public class Menu extends RoundedPanel implements ActionListener{
             
             // Creating menu container
             setOpaque(false);
-            setBackground(new Color(255, 238, 219));
+            setBackground(new Color(255, 238, 219, 200));
             setSize(800, 700);
             
             GridBagConstraints d = new GridBagConstraints();
@@ -85,6 +85,7 @@ public class Menu extends RoundedPanel implements ActionListener{
                 window.currentPanel = window.fridgePanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);
+                window.fridgePanel.updateList();
     
             } else if (e.getActionCommand().equals("Recipes")) {
 
