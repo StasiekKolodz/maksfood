@@ -147,7 +147,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
     public void updateList(){
 
         fridgeDB.sqlSelect("select * from maksfood.fridge");
-        fridgeElements = fridgeDB.getElements(10, 2);
+        fridgeElements = fridgeDB.getElements(30, 2);
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }
