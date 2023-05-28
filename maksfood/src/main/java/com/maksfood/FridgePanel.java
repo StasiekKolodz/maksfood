@@ -144,6 +144,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.gridy = 4;
         this.add(deleteButtonPanel, e);
     }
+
     public void updateList(){
 
         fridgeDB.sqlSelect("select * from maksfood.fridge");

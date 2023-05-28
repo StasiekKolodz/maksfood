@@ -37,7 +37,6 @@ public class MainWindow extends JFrame{
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
         recipeDetalisPanel = new RecipeDetalisPanel(new GridBagLayout(), 45, this);
         fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase);
-    
         
         //setting current panel to menu panel
         currentPanel = menuPanel;

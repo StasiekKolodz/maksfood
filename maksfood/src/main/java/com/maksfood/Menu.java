@@ -2,8 +2,6 @@ package com.maksfood;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-// import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.event.ActionEvent;
@@ -11,15 +9,17 @@ import java.awt.event.ActionEvent;
 public class Menu extends RoundedPanel implements ActionListener{
 
         private MainWindow window;
+        public Time time;
     
         public Menu(LayoutManager layout, int r, MainWindow w){
             super(layout, r);
             window = w;
-            DefaultLabel label = new DefaultLabel("Choose an option:");
+            DefaultLabel label = new DefaultLabel("MAKSFOOD", 40);
             
             ColorButton button1 = new ColorButton("My Fridge");
             ColorButton button2 = new ColorButton("Recipes");
             ColorButton button3 = new ColorButton("Plan shopping");
+            DefaultLabel dateTimeLabel = displayExpData();
             
             // Set button properties
             window.setButton(button1, this);
@@ -30,26 +30,27 @@ public class Menu extends RoundedPanel implements ActionListener{
             //creating button container
             JPanel buttonPanel = new JPanel(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-            c.insets = new Insets(30,100,30,100);
-            c.ipadx = 20;
-            c.ipady = 20;
-            
+            c.insets = new Insets(10,50,10,50);
+            c.ipadx = 10;
+            c.ipady = 10;
+
             c.gridx = 0;
             c.gridy = 1;
+            buttonPanel.add(dateTimeLabel,c);
+            
+            c.gridx = 0;
+            c.gridy = 2;
             buttonPanel.add(button1,c);
     
             c.gridx = 0;
-            c.gridy = 2;
+            c.gridy = 3;
             buttonPanel.add(button2,c);
     
             c.gridx = 0;
-            c.gridy = 3;
+            c.gridy = 4;
             buttonPanel.add(button3,c);
     
-    
-            
             buttonPanel.setBackground(new Color(255, 238, 219, 0));
-    
             
             // Create label container
             JPanel labelPanel = new JPanel(new GridLayout());
@@ -73,7 +74,25 @@ public class Menu extends RoundedPanel implements ActionListener{
             d.gridy = 2;
             add(buttonPanel,d);
         }
-    
+
+        public DefaultLabel displayExpData(){
+            Time time =  new Time(window.dataBase);
+            DefaultLabel dateTimeLabel = new DefaultLabel("Date");
+            // dateTimeLabel.setText("Hello! Today is " + time.dateFormat);
+            int expiredCount = time.getAboutToExpire().size();
+            String expiredCountStr = Integer.toString(expiredCount);
+            if(expiredCount == 1){
+                dateTimeLabel.setText("<html>Warning!<br> " + expiredCountStr +  " product is about to expire!</html>");  
+            }
+            else if(expiredCount > 1){
+                dateTimeLabel.setText("<html>Warning!<br> " + expiredCountStr +  " products are about to expire!</html>");
+            }
+            
+            else{
+                dateTimeLabel.setText("No products in the fridge are about to expire");
+            }
+            return dateTimeLabel;
+        }
         
     
         @Override
