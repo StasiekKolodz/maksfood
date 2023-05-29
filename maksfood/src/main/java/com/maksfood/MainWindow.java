@@ -18,6 +18,8 @@ public class MainWindow extends JFrame{
     public RecipesListPanel recipesListPanel;
     public RecipeDetalisPanel recipeDetalisPanel;
     public FridgeAddPanel fridgeAddPanel;
+    public Expiration expiration;
+
     public MainWindow() {
 //      Create and connect to database
         dataBase = new DataBase();
@@ -30,13 +32,14 @@ public class MainWindow extends JFrame{
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
         //creating panels
-        menuPanel = new Menu(new GridBagLayout(), 45, this);
+        expiration = new Expiration(dataBase);
+        menuPanel = new Menu(new GridBagLayout(), 45, this, dataBase);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this, dataBase);
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
         recipeDetalisPanel = new RecipeDetalisPanel(new GridBagLayout(), 45, this);
-        fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase);
+        fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase, expiration);
         
         //setting current panel to menu panel
         currentPanel = menuPanel;

@@ -9,11 +9,13 @@ import java.awt.event.ActionEvent;
 public class Menu extends RoundedPanel implements ActionListener{
 
         private MainWindow window;
-        public Time time;
+        public Expiration expiration;
+        public DataBase DB;
     
-        public Menu(LayoutManager layout, int r, MainWindow w){
+        public Menu(LayoutManager layout, int r, MainWindow w, DataBase db){
             super(layout, r);
             window = w;
+            DB = db;
             DefaultLabel label = new DefaultLabel("MAKSFOOD", 40);
             
             ColorButton button1 = new ColorButton("My Fridge");
@@ -76,25 +78,22 @@ public class Menu extends RoundedPanel implements ActionListener{
         }
 
         public DefaultLabel displayExpData(){
-            Time time =  new Time(window.dataBase);
             DefaultLabel dateTimeLabel = new DefaultLabel("Date");
             // dateTimeLabel.setText("Hello! Today is " + time.dateFormat);
-            int expiredCount = time.getAboutToExpire().size();
+            int expiredCount = DB.getRowsCountExpiredProds(false);
             String expiredCountStr = Integer.toString(expiredCount);
             if(expiredCount == 1){
-                dateTimeLabel.setText("<html>Warning!<br> " + expiredCountStr +  " product is about to expire!</html>");  
+                dateTimeLabel.setText("<html><div style='text-align: center;'>Warning!<br> " + expiredCountStr +  " product is about to expire!</div></html>");  
             }
             else if(expiredCount > 1){
-                dateTimeLabel.setText("<html>Warning!<br> " + expiredCountStr +  " products are about to expire!</html>");
+                dateTimeLabel.setText("<html><div style='text-align: center;'>Warning!<br> " + expiredCountStr +  " products are about to expire!</div></html>");
             }
-            
             else{
-                dateTimeLabel.setText("No products in the fridge are about to expire");
+                dateTimeLabel.setText("<html><div style='text-align: center;'>No products in the fridge are about to expire</div></html>");
             }
             return dateTimeLabel;
         }
         
-    
         @Override
         public void actionPerformed(ActionEvent e) {
             // Create a new panel depending on which button was pressed

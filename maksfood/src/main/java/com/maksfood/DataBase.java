@@ -108,4 +108,73 @@ public class DataBase {
         sqlUpdate("ALTER TABLE maksfood.fridge AUTO_INCREMENT = 1;");
     }
 
+    public int getRowsCountFridge(){
+        //Query to get the number of rows in a table
+        String query = "SELECT COUNT(id) FROM maksfood.fridge";
+        int count = -1;
+        //Executing the query
+        try{
+            rs = stmt.executeQuery(query);
+            //Retrieving the result
+            rs.next();
+            count = rs.getInt(1);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            System.out.println("GETTING DB COUNT FAILED");
+        }
+        return count;
+    }
+
+    public int getRowsCountShoppingList(){
+        //Query to get the number of rows in a table
+        String query = "SELECT COUNT(id) FROM maksfood.shoppingList";
+        int count = -1;
+        //Executing the query
+        try{
+            rs = stmt.executeQuery(query);
+            //Retrieving the result
+            rs.next();
+            count = rs.getInt(1);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            System.out.println("GETTING DB COUNT FAILED");
+        }
+        return count;
+    }
+
+    public int getRowsCountExpiredProds(boolean isExpired){
+        int count = -1;
+        if(isExpired){
+            String query = "SELECT COUNT(id) FROM maksfood.expiredProducts WHERE isExpired=1";
+         try{
+            rs = stmt.executeQuery(query);
+            //Retrieving the result
+            rs.next();
+            count = rs.getInt(1);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            System.out.println("wyjbeloa sie DB COUNT FAILED");
+        }
+        }
+        else{
+            String query = "SELECT COUNT(id) FROM maksfood.expiredProducts WHERE isExpired=0";
+            try{
+                rs = stmt.executeQuery(query);
+                //Retrieving the result
+                rs.next();
+                count = rs.getInt(1);
+            }
+            catch(Exception e){
+                System.out.println(e);
+                System.out.println("wyjeablo si DB COUNT FAILED");
+            }
+        }
+        //Executing the query
+       
+        return count;
+    }
+
 }                

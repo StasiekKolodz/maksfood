@@ -10,17 +10,17 @@ import java.time.temporal.ChronoUnit;
 import java.util.Vector;
 
 
-public class Time {
+public class Expiration {
 
-    public DataBase fridgeDB;
+    public DataBase DB;
 
     public long currTimeSecs;
     public long difference;
     public String dateFormat;
 
-        public Time(DataBase dataBase){
+        public Expiration(DataBase dataBase){
             this.currTimeSecs = System.currentTimeMillis() / 1000;
-            this.fridgeDB = dataBase;
+            this.DB = dataBase;
             this.dateFormat = formatSecondsToDate(this.currTimeSecs);
         }
 
@@ -34,12 +34,14 @@ public class Time {
 
         public String formatSecondsToDate(long seconds){
             Date date = new Date(seconds * 1000);
-            // Instant instant = Instant.ofEpochSecond(seconds);
-            // LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             String formattedDate = formatter.format(date);
             return formattedDate;
+        }
+
+        public String formatSecondsToDays(long seconds){
+            String days = Double.toString(Math.floor(seconds / 86400));
+            return days;
         }
 
         public String formatSecondsToTime(long seconds){
@@ -63,27 +65,29 @@ public class Time {
         }
         }
 
-        public Vector<String> getExpired(){
-            fridgeDB.sqlSelect("SELECT * from maksfood.fridge");
-            Vector<String> prodExpDates = fridgeDB.getElements(30, 4);
-            Vector<String> prodNames = fridgeDB.getElements(30, 2);
+        public void updateExpired(){
+            DB.sqlSelect("SELECT * from maksfood.fridge");
+            Vector<String> prodExpDates = DB.getElements(30, 4);
+            Vector<String> prodNames = DB.getElements(30, 2);
             Vector<String> expiredProds = new Vector<String>();
             for(int i = 0; i < prodExpDates.size(); i++){
                 String prodDate = prodExpDates.get(i);
                 long prodDateSec = convertDateToSeconds(prodDate);
                 if(prodDateSec < this.currTimeSecs){
                     expiredProds.add(prodNames.get(i));
+                    DB.sqlUpdate("INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, '"+
+                    prodNames.get(i) + "','" + "0" + "','" + "1" + "')"
+                    );
                 }
             }
-            return expiredProds;
         }
 
-        public Vector<String> getAboutToExpire(){
-            fridgeDB.sqlSelect("SELECT * from maksfood.fridge");
+        public void updateAboutToExpire(){
+            DB.sqlSelect("SELECT * from maksfood.fridge");
             Vector<String> prodExpDates = new Vector<String>();
             Vector<String> prodNames = new Vector<String>();
             for(int i=0; i<30; i++){
-                Vector<String> prodData = fridgeDB.getRow(i, 2, 4);
+                Vector<String> prodData = DB.getRow(i, 2, 4);
                 if(prodData.size()!=0){
                 prodExpDates.add(prodData.elementAt(2));
                 prodNames.add(prodData.elementAt(0));
@@ -96,9 +100,14 @@ public class Time {
                 // check if the exp date is in 3 days
                 if(0 < prodDateSec - this.currTimeSecs &&  prodDateSec - this.currTimeSecs < 259200000){
                     aboutToExpire.add(prodNames.get(i));
+                    aboutToExpire.add(prodNames.get(i));
+                    long secsToExpire = prodDateSec - this.currTimeSecs;
+                    String daysToExpire = formatSecondsToDays(secsToExpire);
+                    DB.sqlUpdate("INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, '"+
+                    prodNames.get(i) + "','" + daysToExpire + "','" + "0" + "')"
+                    );
                 }
             }
-            return aboutToExpire;
     }
 }
     
