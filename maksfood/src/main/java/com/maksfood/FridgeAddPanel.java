@@ -1,28 +1,24 @@
 package com.maksfood;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*; 
-import java.util.Vector;
 
 public class FridgeAddPanel extends RoundedPanel implements ActionListener{
 
     public MainWindow window;
     public DataBase DB;
+    public Expiration expiration;
     JTextField nameTextField;
     JTextField amountTextField;
     JTextField expDateTextField;
 
-    public FridgeAddPanel(LayoutManager layout, int r, MainWindow w, DataBase dataBase){
+    public FridgeAddPanel(LayoutManager layout, int r, MainWindow w, DataBase dataBase, Expiration exp){
         super(layout, r);
         window = w;
+        expiration = exp;
         DB = dataBase;
         JLabel fridgeLabel = new JLabel("Add item to fridge");
         JLabel nameLabel = new JLabel("Item Name");
@@ -114,8 +110,6 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         e.gridx = 0;
         e.gridy = 7;
         this.add(expDateTextField, e);
-
-
     }
 
   
@@ -134,6 +128,7 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
 
             if(!nameTextField.getText().equals("")){
                 addEnteredElement();
+                expiration.updateAboutToExpire();
             }
         }
 
@@ -144,6 +139,7 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         nameTextField.setText("");
         amountTextField.setText("");
         expDateTextField.setText("");
+
     }
 
 }

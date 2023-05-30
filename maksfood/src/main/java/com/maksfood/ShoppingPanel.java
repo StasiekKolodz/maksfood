@@ -10,12 +10,6 @@ import java.util.Vector;
 
 
 public class ShoppingPanel extends RoundedPanel implements ActionListener, ListSelectionListener{
-
-
-    // TODO
-    // implement class for Shopping List and List of shopping lists
-    // refactor
-
     public MainWindow window;
     public DataBase shoppingDB;
     public JPanel shoppingLabelPanel;
@@ -51,34 +45,11 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         listsList =  new ListContainer(this, this);
         shoppingList =  new ListContainer(this, this);
 
-        // setting example content of lists 
-        // listsList.listModel.addElement("Tortilla");
-        // listsList.listModel.addElement("StudentPack");
-        // listsList.listModel.addElement("Harcerz");
         updateListsList();
-
-        // setting layout of the panel
-        /* 
-        TODO 
-        fix allignment for desired look:
-                | Shopping |
-            -----------------------
-            List 1    |     List 2
-            -----------------------
-                |  Return  |
-        */
         setLayout();
 
-
-        // setting appearance of lists, so it corresponds to the app graphics
-        /* 
-        TODO 
-        set the visible frames of the list
-        */
         setListAppearance(listsList.list);
         setListAppearance(shoppingList.list);
-
-
     }
 
     public void setLayout(){
@@ -114,17 +85,12 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         // list.setForeground(new Color(165, 56, 96));
         // list.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         // list.setBackground(new Color(255, 238, 219));
-
     }
-    // returns a list of items for the given list name
 
     public void updateList(String selectedValue){
-
         shoppingDB.sqlSelect("SELECT * from maksfood.shoppingList WHERE parent_list='"+selectedValue+"'");
         listElements = shoppingDB.getElements(10, 2);
-        // for(int i=0; i<30; i++){
-        //     fridgeElements.add("dkk");
-        // }
+
         shoppingList.list.setListData(listElements);
         shoppingList.list.setSelectedIndex(0);
     }
@@ -135,9 +101,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
 
         shoppingDB.sqlSelect("SELECT * from maksfood.shoppingList WHERE parent_list='"+selectedItem+"'");
         listElements = shoppingDB.getElements(10, 2);
-        // for(int i=0; i<30; i++){
-        //     fridgeElements.add("dkk");
-        // }
         shoppingList.list.setListData(listElements);
         shoppingList.list.setSelectedIndex(0);
     }
@@ -146,30 +109,8 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
 
         shoppingDB.sqlSelect("SELECT * from maksfood.listsList");
         listElements = shoppingDB.getElements(30, 2);
-        // for(int i=0; i<30; i++){
-        //     fridgeElements.add("dkk");
-        // }
         listsList.listModel.clear();
         listsList.listModel.addAll(listElements);
-    }
-    private String[] getListItems(String listName) {
-        /* 
-        TODO 
-        add database for shopping list items
-        preferably in separete ShoppingList class
-        */
-
-        shoppingDB.sqlSelect("select * from maksfood.shoppingList where parent_list="+listName);
-        listElements = shoppingDB.getElements(30, 2);
-        if (listName.equals("Tortilla")) {
-            return new String[] {"Tortilla", "Lettuce Mix", "Roasted Chicken", "Garlic Sauce", "Sriracha Sauce"};
-        } else if (listName.equals("StudentPack")) {
-            return new String[] {"Piwo", "Zupka chińska", "Parówki"};
-        } else if (listName.equals("Harcerz")) {
-            return new String[] {"Szyszki", "Mielonka", "Keczup"};
-        } else {
-            return new String[] {};
-        }
     }
 
     @Override
@@ -184,9 +125,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         else if(src == listsList.addButton){
             String text = listsList.textField.getText();
                 if (!text.isEmpty()) {
-                    // listsList.listModel.addElement(text);
-                    // shoppingDB.sqlUpdate("INSERT INTO maksfood.fridge VALUES(DEFAULT,'"+
-                    // listsList.textField.getText() + "','" + amountTextField.getText() + "','" + expDateTextField.getText() + "');");\
                     addListsListElement(text);
                     listsList.textField.setText("");
                 }
@@ -194,7 +132,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         else if(src == shoppingList.addButton){
             String text = shoppingList.textField.getText();
                 if (!text.isEmpty()) {
-                    // shoppingList.listModel.addElement(text);
                     addShoppingListElement(text);
                     shoppingList.textField.setText("");
                 }
@@ -226,9 +163,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     }
     }
 
-    // WARNING
-    // Changing list removes added items
-    // No save functionality!!!
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -241,10 +175,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     
                     shoppingList.listModel.clear();
                     updateList(selectedValue);
-                    // String[] items = getListItems(selectedValue);
-                    // for (String item : items) {
-                    //     shoppingList.listModel.addElement(item);
-                    // }
                 }
             }
         }

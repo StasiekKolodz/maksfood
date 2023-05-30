@@ -35,6 +35,21 @@ CREATE TABLE maksfood.listsList(
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "StudentPack");
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "Tortilla");
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "Harcerz");
+
+CREATE TABLE maksfood.expiredProducts(
+	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    daysToExpire INT NOT NULL,
+    isExpired BOOL DEFAULT FALSE
+    );
+
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "MILK", "0", "1");
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "CHEESE", "0", "1");
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "CORN", "0", "1");
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "TOMATO", "0", "1");
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "YOGURT", "0", "1");
+INSERT INTO maksfood.expiredProducts VALUES(DEFAULT, "KETCHUP", "0", "1");
+
 CREATE TABLE maksfood.favourite_recipe(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(2048) NOT NULL,
