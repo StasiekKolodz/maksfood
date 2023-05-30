@@ -35,3 +35,10 @@ CREATE TABLE maksfood.listsList(
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "StudentPack");
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "Tortilla");
 INSERT INTO maksfood.listsList VALUES(DEFAULT, "Harcerz");
+CREATE TABLE maksfood.favourite_recipe(
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(2048) NOT NULL,
+    ingredients VARCHAR(2048) NOT NULL,
+    photo_link VARCHAR(2048) NOT NULL,
+    recipe_link VARCHAR(2048) NOT NULL,
+);

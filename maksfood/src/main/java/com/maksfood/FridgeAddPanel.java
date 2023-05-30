@@ -75,21 +75,25 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         e.insets = new Insets(20,5,20,5);
         e.gridx = 0;
         e.gridy = 1;
+        e.gridwidth = 2;
         this.add(fridgeAddLabelPanel, e);
 
         e.gridx = 0;
         e.gridy = 2;
+        e.gridwidth =2;
         this.add(nameLabelPanel, e);
 
         e.gridx = 0;
         e.gridy = 4;
+        e.gridwidth = 2;
         this.add(amountLabelPanel, e);
 
         e.gridx = 0;
         e.gridy = 6;
+        e.gridwidth = 2;
         this.add(expDateLabelPanel, e);
 
-
+        e.gridwidth = 1;
         e.gridx = 0;
         e.gridy = 8;
         this.add(returnButtonPanel, e);
@@ -102,6 +106,7 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         expDateTextField = new JTextField("", 16);
         e.gridx = 0;
         e.gridy = 3;
+        e.gridwidth = 2;
         this.add(nameTextField, e);
         e.gridx = 0;
         e.gridy = 5;

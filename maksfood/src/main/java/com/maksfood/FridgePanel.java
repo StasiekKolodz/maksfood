@@ -61,6 +61,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.insets = new Insets(20,5,20,5);
         e.gridx = 0;
         e.gridy = 1;
+        e.gridwidth = 2;
         this.add(fridgeLabelPanel, e);
         // createDbList();
 
@@ -70,8 +71,8 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // myList.setSize(200, 100);
         fridgeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         fridgeList.setForeground(Color.WHITE);
-        fridgeList.setFixedCellHeight(22);
-        fridgeList.setFixedCellWidth(120);
+        fridgeList.setFixedCellHeight(30);
+        fridgeList.setFixedCellWidth(200);
         fridgeList.setSelectionBackground(Color.WHITE);
         fridgeList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)fridgeList.getCellRenderer();  
@@ -116,6 +117,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // fridgeList.setListData(example);
         e.gridx = 0;
         e.gridy = 2;
+        e.gridwidth = 2;
         this.add(scrollPane, e);
         updateList();
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
@@ -123,9 +125,11 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         jt=new JTable(data,column); 
         jt.setGridColor(new Color(165, 56, 96));
         jt.setSelectionBackground(new Color(165, 56, 96));
+        jt.setSize(200, 100);
         // jt.setBounds(30,40,200,300);  
-        e.gridx = 1;
-        e.gridy = 2;       
+        e.gridx = 0;
+        e.gridy = 3;  
+        e.gridwidth = 2;     
         this.add(jt, e);
 
         // detailsLabel = new JLabel("details");
@@ -135,12 +139,14 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // e.gridy = 3;
         // this.add(detailsLabel, e);
         e.gridx = 0;
-        e.gridy = 5;
+        e.gridy = 6;
+        e.gridwidth = 2;
         this.add(returnButtonPanel, e);
-        e.gridx = 1;
+        e.gridwidth = 1;
+        e.gridx = 0;
         e.gridy = 4;
         this.add(addButtonPanel, e);
-        e.gridx = 0;
+        e.gridx = 1;
         e.gridy = 4;
         this.add(deleteButtonPanel, e);
     }
