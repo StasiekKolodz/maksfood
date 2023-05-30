@@ -10,8 +10,11 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.sql.*; 
 import java.util.Vector;
+
 
 public class FridgePanel extends RoundedPanel implements ActionListener{
 
@@ -24,12 +27,14 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
     public DataBase fridgeDB;
     public JTable jt;
     public JLabel detailsLabel;
+    public int jtFlag = 0;
     //TODO recipes panel
 
     public FridgePanel(LayoutManager layout, int r, MainWindow w, DataBase dataBase){
         super(layout, r);
         window = w;
         fridgeDB = dataBase;
+        
         //creating label
         DefaultLabel fridgeLabel = new DefaultLabel("My fridge");
 
@@ -94,9 +99,11 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
                 fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
                 productDetails = fridgeDB.getRow(1, 2, 4);
                 try{
+                    jtFlag = 1;
                 for(int i=0; i<3; i++){
                 jt.setValueAt(productDetails.elementAt(i), 1,i);
                 }
+                    jtFlag = 0;
             }
                 catch(Exception k){ 
                     }
@@ -126,6 +133,17 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         jt.setGridColor(new Color(165, 56, 96));
         jt.setSelectionBackground(new Color(165, 56, 96));
         jt.setSize(200, 100);
+        jt.getModel().addTableModelListener(new TableModelListener() {
+            
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(jtFlag == 0){
+                System.out.println(e.getType());
+                }
+
+               // your code goes here, whatever you want to do when something changes in the table
+            }
+          });
         // jt.setBounds(30,40,200,300);  
         e.gridx = 0;
         e.gridy = 3;  

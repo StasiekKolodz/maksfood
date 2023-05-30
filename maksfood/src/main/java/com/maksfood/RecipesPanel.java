@@ -196,7 +196,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         Vector<String> recipesNameElements = recipeDB.getElements(1);
         System.out.println(recipesNameElements.toString());
         recipeDB.sqlSelect("select ingredients from maksfood.favourite_recipe");
-        Vector<String> ingredientsNameElements = recipeDB.getElements( 1);
+        Vector<String> ingredientsNameElements = recipeDB.getElements(1);
         System.out.println(ingredientsNameElements.toString());
         recipeDB.sqlSelect("select photo_link from maksfood.favourite_recipe");
         Vector<String> photo_links = recipeDB.getElements(1);

@@ -40,5 +40,5 @@ CREATE TABLE maksfood.favourite_recipe(
     name VARCHAR(2048) NOT NULL,
     ingredients VARCHAR(2048) NOT NULL,
     photo_link VARCHAR(2048) NOT NULL,
-    recipe_link VARCHAR(2048) NOT NULL,
+    recipe_link VARCHAR(2048) NOT NULL
 );
