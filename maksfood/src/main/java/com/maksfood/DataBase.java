@@ -122,5 +122,9 @@ public class DataBase {
         sqlUpdate("UPDATE maksfood.fridge SET id=id-1 WHERE id> " + Integer.toString(deletedId)+ " AND id!=1");
         sqlUpdate("ALTER TABLE maksfood.fridge AUTO_INCREMENT = 1;");
     }
+    public void fixFavouriteRecipesIds(int deletedId){
+        sqlUpdate("UPDATE maksfood.favourite_recipe SET id=id-1 WHERE id> " + Integer.toString(deletedId)+ " AND id!=1");
+        sqlUpdate("ALTER TABLE maksfood.favourite_recipe AUTO_INCREMENT = 1;");
+    }
 
 }                
