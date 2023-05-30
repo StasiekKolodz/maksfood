@@ -128,7 +128,9 @@ public class Menu extends RoundedPanel implements ActionListener{
                 window.fridgePanel.updateList();
     
             } else if (e.getActionCommand().equals("Recipes")) {
-
+                window.recipesPanel.update_products();
+                window.recipesPanel.update_fav_recipes_from_db();
+                window.recipesPanel.update_favourite_recipes();
                 window.currentPanel.setVisible(false);
                 window.currentPanel = window.recipesPanel;
                 window.getContentPane().add(window.currentPanel);
@@ -137,6 +139,8 @@ public class Menu extends RoundedPanel implements ActionListener{
             } else if (e.getActionCommand().equals("Plan shopping")) {
 
                 window.currentPanel.setVisible(false);
+                // window.shoppingPanel.updateList();
+                window.shoppingPanel.updateListsList();
                 window.currentPanel = window.shoppingPanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);

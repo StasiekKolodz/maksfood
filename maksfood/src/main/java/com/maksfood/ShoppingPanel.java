@@ -197,7 +197,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         updateList();
     }
     public void deleteSelectedList(String list){
-        shoppingDB.sqlUpdate("DELETE FROM maksfood.shoppingList WHERE parent_name='" + list + "'");
+        shoppingDB.sqlUpdate("DELETE FROM maksfood.shoppingList WHERE parent_list='" + list + "'");
         shoppingDB.sqlUpdate("DELETE FROM maksfood.listsList WHERE name='" + list + "'");
         updateListsList();
     }

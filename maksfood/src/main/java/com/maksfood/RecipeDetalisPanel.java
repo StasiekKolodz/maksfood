@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 // import java.awt.event.MouseEvent;
 // import java.awt.event.MouseListener;
@@ -27,6 +29,7 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     public JLabel photo = new JLabel();
     public JLabel recipesLabel = new JLabel();
     public JScrollPane ingredientScrollPane = new JScrollPane(ingredientList);
+    public JPanel previousPanel;
     
     public RecipeDetalisPanel(LayoutManager layout, int r, MainWindow w) {
         super(layout, r);
@@ -40,6 +43,11 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
 
+        ColorButton seeOnWebsiteButton = new ColorButton("See on website");
+        window.setButton(seeOnWebsiteButton, this);
+
+        ColorButton addToShoppingListButton = new ColorButton("Add to shopping list");
+        window.setButton(addToShoppingListButton, this);
 
         // creating button and label panels
         JPanel recipesLabelPanel = new JPanel(new GridLayout());
@@ -83,6 +91,15 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         GridBagConstraints e = new GridBagConstraints();
         e.insets = new Insets(10, 10, 10, 10);
         e.gridx = 0;
+        e.gridy = 3;
+        this.add(seeOnWebsiteButton, e);
+        
+        e.gridx = 1;
+        e.gridy = 3;
+        this.add(addToShoppingListButton, e);
+        
+        e.gridwidth = 2;
+        e.gridx = 0;
         e.gridy = 0;
         this.add(recipesLabelPanel, e);
         
@@ -93,20 +110,21 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         e.gridx = 0;
         e.gridy = 2;
         this.add(ingredientScrollPane, e);
-
-
+        
         e.gridx = 0;
-        e.gridy = 3;
+        e.gridy = 4;
         this.add(returnButtonPanel, e);
     }
 
-    public void update_details(int index) throws IOException{
-        current_recipe = window.recipesPanel.rg.recipes_list.get(index);
+    public void update_details(Recipe current_recipe) throws IOException{
+        // current_recipe = window.recipesPanel.rg.recipes_list.get(index);
+        this.current_recipe = current_recipe;
         ingredient_model.clear();
         for (String ing : current_recipe.ingredient_lines) {
             String text = String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, ing);
             ingredient_model.addElement(text);
         }
+        System.out.println(current_recipe.link_to_photo.toString());
         photo_url = new URL(current_recipe.link_to_photo);
         // URL photo_url = new URL(current_recipe.link_to_photo);
         BufferedImage image = ImageIO.read(photo_url);
@@ -120,6 +138,34 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
 
     }
 
+    public static boolean openWebpage(URI uri) {
+        System.out.println("theeereee");
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        System.out.println(desktop.toString());
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            System.out.println("theeereee3333333");
+            try {
+                desktop.browse(uri);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("duuuuuuuuuuuupa");
+            }
+        }
+        return false;
+    }
+    
+    public static boolean openWebpage(URL url) {
+        try {
+            System.out.println("theeereee");
+            return openWebpage(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.out.println("duuuuuuuuuuuupa");
+        }
+        return false;
+    }
+
     // button click perform
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -127,10 +173,29 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
 
         window.currentPanel.setVisible(false);
 
-        window.currentPanel = window.recipesListPanel;
+        window.currentPanel = previousPanel;
 
         window.currentPanel.setVisible(true);
     }
+    if (e.getActionCommand().equals("See on website")) {
+        try {
+            System.out.println("theeereee");
+            openWebpage(new URL(current_recipe.link_to_recipe));
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        }
+    }
+    if (e.getActionCommand().equals("Add to shopping list")) {
+        window.shoppingPanel.shoppingDB.sqlUpdate("INSERT INTO maksfood.listsList VALUES(DEFAULT,'"
+        +current_recipe.recipe_text+"');");
+        for (String s : current_recipe.ingredient_lines) {
+            window.shoppingPanel.shoppingDB.sqlUpdate("INSERT INTO maksfood.shoppingList VALUES(DEFAULT,'"
+            +s+"','"+"1"+"','"+current_recipe.recipe_text+"');");
+        }
+        // window.shoppingPanel.updateListsList();
+        // window.shoppingPanel.updateList();
+    }
+    
     
     
 }

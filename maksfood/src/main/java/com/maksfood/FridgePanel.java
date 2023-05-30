@@ -10,8 +10,11 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.sql.*; 
 import java.util.Vector;
+
 
 public class FridgePanel extends RoundedPanel implements ActionListener{
 
@@ -24,6 +27,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
     public DataBase fridgeDB;
     public JTable jt;
     public JLabel detailsLabel;
+    public int jtFlag = 0;
     public Menu menuPanel;
     //TODO recipes panel
 
@@ -31,6 +35,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         super(layout, r);
         window = w;
         fridgeDB = dataBase;
+        
         //creating label
         DefaultLabel fridgeLabel = new DefaultLabel("My fridge");
         menuPanel = window.menuPanel;
@@ -63,6 +68,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.insets = new Insets(20,5,20,5);
         e.gridx = 0;
         e.gridy = 1;
+        e.gridwidth = 2;
         this.add(fridgeLabelPanel, e);
         // createDbList();
 
@@ -72,8 +78,8 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // myList.setSize(200, 100);
         fridgeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         fridgeList.setForeground(Color.WHITE);
-        fridgeList.setFixedCellHeight(22);
-        fridgeList.setFixedCellWidth(120);
+        fridgeList.setFixedCellHeight(30);
+        fridgeList.setFixedCellWidth(200);
         fridgeList.setSelectionBackground(Color.WHITE);
         fridgeList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)fridgeList.getCellRenderer();  
@@ -95,9 +101,11 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
                 fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
                 productDetails = fridgeDB.getRow(1, 2, 4);
                 try{
+                    jtFlag = 1;
                 for(int i=0; i<3; i++){
                 jt.setValueAt(productDetails.elementAt(i), 1,i);
                 }
+                    jtFlag = 0;
             }
                 catch(Exception k){ 
                     }
@@ -118,6 +126,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // fridgeList.setListData(example);
         e.gridx = 0;
         e.gridy = 2;
+        e.gridwidth = 2;
         this.add(scrollPane, e);
         updateList();
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
@@ -125,9 +134,22 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         jt=new JTable(data,column); 
         jt.setGridColor(new Color(165, 56, 96));
         jt.setSelectionBackground(new Color(165, 56, 96));
+        jt.setSize(200, 100);
+        jt.getModel().addTableModelListener(new TableModelListener() {
+            
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(jtFlag == 0){
+                System.out.println(e.getType());
+                }
+
+               // your code goes here, whatever you want to do when something changes in the table
+            }
+          });
         // jt.setBounds(30,40,200,300);  
-        e.gridx = 1;
-        e.gridy = 2;       
+        e.gridx = 0;
+        e.gridy = 3;  
+        e.gridwidth = 2;     
         this.add(jt, e);
 
         // detailsLabel = new JLabel("details");
@@ -137,12 +159,14 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         // e.gridy = 3;
         // this.add(detailsLabel, e);
         e.gridx = 0;
-        e.gridy = 5;
+        e.gridy = 6;
+        e.gridwidth = 2;
         this.add(returnButtonPanel, e);
-        e.gridx = 1;
+        e.gridwidth = 1;
+        e.gridx = 0;
         e.gridy = 4;
         this.add(addButtonPanel, e);
-        e.gridx = 0;
+        e.gridx = 1;
         e.gridy = 4;
         this.add(deleteButtonPanel, e);
     }
@@ -201,3 +225,4 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
 
 }
+
