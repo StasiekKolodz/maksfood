@@ -122,19 +122,11 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
         // String example[] = {"List1", "List2", "List3"};
         // fridgeList.setListData(example);
-        JScrollPane jsp = new JScrollPane(fridgeList);
-        jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jsp.setMinimumSize(new Dimension(200,400));
-        jsp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = new Color(76, 59, 77);
-            }
-        });
         e.gridx = 0;
         e.gridy = 2;
-        this.add(jsp, e);
-        updateList(dataBase);
+        e.gridwidth = 2;
+        this.add(scrollPane, e);
+        updateList();
         String data[][]={ {"name","amount","exp date"},{"","",""}};    
         String column[]={"product name","amount","expiration date"};         
         jt=new JTable(data,column); 
@@ -176,9 +168,10 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         e.gridy = 4;
         this.add(deleteButtonPanel, e);
     }
-    public void updateList(DataBase dataBase){
-        dataBase.sqlSelect("select * from new_schema.new_table");
-        fridgeElements = dataBase.getElements(2);
+    public void updateList(){
+
+        fridgeDB.sqlSelect("select * from maksfood.fridge");
+        fridgeElements = fridgeDB.getElements(30, 2);
         // for(int i=0; i<30; i++){
         //     fridgeElements.add("dkk");
         // }
@@ -189,7 +182,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         int index = fridgeList.getSelectedIndex();
         fridgeDB.sqlUpdate("DELETE FROM maksfood.fridge WHERE id=" + Integer.toString(index+1));
         fridgeDB.fixIds(index+1);
-        updateList(fridgeDB);
+        updateList();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -215,3 +208,4 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
 
 }
+

@@ -185,6 +185,17 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
             e1.printStackTrace();
         }
     }
+    if (e.getActionCommand().equals("Add to shopping list")) {
+        window.shoppingPanel.shoppingDB.sqlUpdate("INSERT INTO maksfood.listsList VALUES(DEFAULT,'"
+        +current_recipe.recipe_text+"');");
+        for (String s : current_recipe.ingredient_lines) {
+            window.shoppingPanel.shoppingDB.sqlUpdate("INSERT INTO maksfood.shoppingList VALUES(DEFAULT,'"
+            +s+"','"+"1"+"','"+current_recipe.recipe_text+"');");
+        }
+        // window.shoppingPanel.updateListsList();
+        // window.shoppingPanel.updateList();
+    }
+    
     
     
 }

@@ -85,7 +85,7 @@ public class Menu extends RoundedPanel implements ActionListener{
                 window.currentPanel = window.fridgePanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);
-                window.fridgePanel.updateList(window.fridgePanel.fridgeDB);
+                window.fridgePanel.updateList();
     
             } else if (e.getActionCommand().equals("Recipes")) {
                 window.recipesPanel.update_products();
@@ -99,6 +99,8 @@ public class Menu extends RoundedPanel implements ActionListener{
             } else if (e.getActionCommand().equals("Plan shopping")) {
 
                 window.currentPanel.setVisible(false);
+                // window.shoppingPanel.updateList();
+                window.shoppingPanel.updateListsList();
                 window.currentPanel = window.shoppingPanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);
