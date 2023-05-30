@@ -33,7 +33,7 @@ public class MainWindow extends JFrame{
         menuPanel = new Menu(new GridBagLayout(), 45, this);
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
-        shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this);
+        shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this, dataBase);
         recipesListPanel = new RecipesListPanel(new GridBagLayout(), 45, this);
         recipeDetalisPanel = new RecipeDetalisPanel(new GridBagLayout(), 45, this);
         fridgeAddPanel = new FridgeAddPanel(new GridBagLayout(), 45, this, dataBase);

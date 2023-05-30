@@ -99,6 +99,8 @@ public class Menu extends RoundedPanel implements ActionListener{
             } else if (e.getActionCommand().equals("Plan shopping")) {
 
                 window.currentPanel.setVisible(false);
+                // window.shoppingPanel.updateList();
+                window.shoppingPanel.updateListsList();
                 window.currentPanel = window.shoppingPanel;
                 window.getContentPane().add(window.currentPanel);
                 window.currentPanel.setVisible(true);
