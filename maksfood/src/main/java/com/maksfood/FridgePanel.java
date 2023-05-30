@@ -208,3 +208,4 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
 
 
 }
+
