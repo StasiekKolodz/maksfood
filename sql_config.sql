@@ -13,4 +13,10 @@ INSERT INTO maksfood.fridge VALUES(DEFAULT, "TOMATO", "3", "2001-03-27");
 INSERT INTO maksfood.fridge VALUES(DEFAULT, "YOGURT", "3", "2003-05-17");
 INSERT INTO maksfood.fridge VALUES(DEFAULT, "KETCHUP", "3", "2006-11-02");
     
-
+CREATE TABLE maksfood.favourite_recipe(
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(2048) NOT NULL,
+    ingredients VARCHAR(2048) NOT NULL,
+    photo_link VARCHAR(2048) NOT NULL,
+    recipe_link VARCHAR(2048) NOT NULL,
+);

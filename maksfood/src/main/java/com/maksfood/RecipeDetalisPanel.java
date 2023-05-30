@@ -124,6 +124,7 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
             String text = String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, ing);
             ingredient_model.addElement(text);
         }
+        System.out.println(current_recipe.link_to_photo.toString());
         photo_url = new URL(current_recipe.link_to_photo);
         // URL photo_url = new URL(current_recipe.link_to_photo);
         BufferedImage image = ImageIO.read(photo_url);
