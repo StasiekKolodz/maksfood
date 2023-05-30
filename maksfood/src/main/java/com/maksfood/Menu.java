@@ -88,7 +88,9 @@ public class Menu extends RoundedPanel implements ActionListener{
                 window.fridgePanel.updateList();
     
             } else if (e.getActionCommand().equals("Recipes")) {
-
+                window.recipesPanel.update_products();
+                window.recipesPanel.update_fav_recipes_from_db();
+                window.recipesPanel.update_favourite_recipes();
                 window.currentPanel.setVisible(false);
                 window.currentPanel = window.recipesPanel;
                 window.getContentPane().add(window.currentPanel);
