@@ -141,6 +141,14 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
             public void tableChanged(TableModelEvent e) {
                 if(jtFlag == 0){
                 System.out.println(e.getType());
+                int id = fridgeList.getSelectedIndex();
+                System.out.println(jt.getValueAt(1,0));
+                String name = jt.getValueAt(1,0).toString();
+                String amount = jt.getValueAt(1,1).toString();
+                String exp_date = jt.getValueAt(1,2).toString();
+                fridgeDB.sqlUpdate("UPDATE maksfood.fridge SET name='"+name+"', amount='"+amount+"', exp_date='"+exp_date+
+                "' WHERE id="+(id+1) +";");
+                updateList();
                 }
 
                // your code goes here, whatever you want to do when something changes in the table
