@@ -24,6 +24,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
     public DataBase fridgeDB;
     public JTable jt;
     public JLabel detailsLabel;
+    public Menu menuPanel;
     //TODO recipes panel
 
     public FridgePanel(LayoutManager layout, int r, MainWindow w, DataBase dataBase){
@@ -32,6 +33,7 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         fridgeDB = dataBase;
         //creating label
         DefaultLabel fridgeLabel = new DefaultLabel("My fridge");
+        menuPanel = window.menuPanel;
 
         //creating return button
         ColorButton returnButton = new ColorButton("Return");
@@ -161,17 +163,31 @@ public class FridgePanel extends RoundedPanel implements ActionListener{
         fridgeDB.fixIds(index+1);
         updateList();
     }
+
+    public void deleteFromExpired(){
+        int index = fridgeList.getSelectedIndex();
+        fridgeDB.sqlUpdate("DELETE FROM maksfood.expiredProducts WHERE name="+"\""+fridgeList.getModel().getElementAt(index)+"\"");
+        fridgeDB.fixIds(index+1);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Return")) {
 
+            System.out.println("before compose");
+            System.out.println("after compose");
+
             window.currentPanel.setVisible(false);
-
             window.currentPanel = window.menuPanel;
-
+            window.expiration.updateAboutToExpire();
+            window.menuPanel.dateTimeLabel.setText(window.menuPanel.displayExpData());
+            window.getContentPane().add(window.menuPanel);
             window.currentPanel.setVisible(true);
+
+            
         }
         if (e.getActionCommand().equals("Delete")) {
+            deleteFromExpired();
             deleteSelectedElement();
         }
 

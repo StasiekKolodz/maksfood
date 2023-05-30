@@ -33,7 +33,7 @@ public class MainWindow extends JFrame{
 
         //creating panels
         expiration = new Expiration(dataBase);
-        menuPanel = new Menu(new GridBagLayout(), 45, this, dataBase);
+        menuPanel = new Menu(new GridBagLayout(), 45, this, dataBase, new DefaultLabel("No data"));
         fridgePanel = new FridgePanel(new GridBagLayout(), 45, this, dataBase);
         recipesPanel = new RecipesPanel(new GridBagLayout(),45, this);
         shoppingPanel = new ShoppingPanel(new GridBagLayout(), 45, this, dataBase);
@@ -84,6 +84,7 @@ public class MainWindow extends JFrame{
         buttonName.setPreferredSize(new Dimension(width, height));
         buttonName.addActionListener(l);
     }
+
     //running App
     public static void main(String[] args) {
         MainWindow app = new MainWindow();
