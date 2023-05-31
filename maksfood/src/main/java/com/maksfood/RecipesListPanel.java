@@ -46,7 +46,7 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         recipesLabelPanel.setBounds(getVisibleRect());
         
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
         recipeList.setSelectionMode(
             ListSelectionModel.SINGLE_SELECTION);

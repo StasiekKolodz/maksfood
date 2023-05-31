@@ -81,7 +81,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER);  
         // renderer.set
-        ColorButton selectButton = new ColorButton("find recipes");
+        ColorButton selectButton = new ColorButton("Find recipes");
         JScrollPane scrollPane = new JScrollPane(myList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setMinimumSize(new Dimension(300,400));
@@ -247,7 +247,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
 
         window.currentPanel.setVisible(true);
     }
-    if (e.getActionCommand().equals("find recipes")){
+    if (e.getActionCommand().equals("Find recipes")){
         window.currentPanel.setVisible(false);
         window.currentPanel = window.recipesListPanel;
         window.getContentPane().add(window.recipesListPanel);
