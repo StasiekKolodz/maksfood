@@ -23,7 +23,7 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         recipesLabel.setForeground(new Color(165, 56, 96));
         recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
 
-        // creating return button
+        // creating buttons
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
 
@@ -41,13 +41,14 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         returnButtonPanel.add(returnButton);
         recipesLabelPanel.setBounds(getVisibleRect());
         
+        // configuring panel visual sides
         setOpaque(false);
         setBackground(new Color(255, 238, 219, 200));
 
+        // adding list of product in recipe
         recipeList.setSelectionMode(
             ListSelectionModel.SINGLE_SELECTION);
         recipeList.setBackground(new Color(165, 56, 96));
-        // recipeList.setSize(200, 100);
         recipeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 17));
         recipeList.setForeground(Color.WHITE);
         recipeList.setFixedCellHeight(30);
@@ -57,7 +58,6 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)recipeList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
-
         JScrollPane recipeScrollList = new JScrollPane(recipeList);
         recipeScrollList.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override

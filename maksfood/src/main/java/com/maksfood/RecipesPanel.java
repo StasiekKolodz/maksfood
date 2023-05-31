@@ -20,25 +20,38 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     public MainWindow window;
     DefaultListModel<String> model = new DefaultListModel<>();
     DefaultListModel<String> recipesModel = new DefaultListModel<>();
-    JList<String> myList = new JList<>( model );
+    JList<String> productList = new JList<>( model );
     JList<String> favRecipes = new JList<>( recipesModel );
     public RecipesGenerator rg = new RecipesGenerator();
     public ListModel<String> d;
     public JTextField mealName = new JTextField();
     List<Recipe> fav_recipes_list = new ArrayList<Recipe>();
-
-
+    
+    
     public RecipesPanel(LayoutManager layout, int r, MainWindow w) {
         super(layout, r);
         window = w;
-
+        
         // creating label
         DefaultLabel recipesLabel = new DefaultLabel("Your products",25);
         DefaultLabel favRecipesLabel = new DefaultLabel("Favourite recipes",25);
-
-        // creating return button
+        
+        // creating  buttons
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
+        
+        ColorButton selectButton = new ColorButton("Find recipes");
+        window.setButton(selectButton, this);
+        
+        ColorButton showDetailsButton = new ColorButton("Show details");
+        window.setButton(showDetailsButton, this);
+        
+        ColorButton removeFromFavButton = new ColorButton("Remove recipe");
+        window.setButton(removeFromFavButton, this);
+        
+        ColorButton findByNameButton = new ColorButton("Find by name");
+        window.setButton(findByNameButton, this);
+
 
         // creating button and label panels
         JPanel recipesLabelPanel = new JPanel(new GridLayout());
@@ -47,33 +60,30 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         recipesLabelPanel.add(recipesLabel);
         returnButtonPanel.add(returnButton);
         recipesLabelPanel.setBounds(getVisibleRect());
+        JPanel textPanel = new JPanel(new GridLayout());
+        textPanel.add(mealName);
         
+        
+        // configuring visual sides of panel
         setOpaque(false);
         setBackground(new Color(255, 238, 219, 200));
+        
 
-        // adding elements to RecipesPanel
-        GridBagConstraints e = new GridBagConstraints();
-        e.insets = new Insets(10, 10, 10, 10);
-        e.gridx = 0;
-        e.gridy = 0;
-        this.add(recipesLabelPanel, e);
-
-
-
-        update_products();
-
-        myList.setSelectionMode(
-                    ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        myList.setBackground(new Color(165, 56, 96));
-        myList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
-        myList.setForeground(Color.WHITE);
-        myList.setSelectionBackground(Color.WHITE);
-        myList.setSelectionForeground(new Color(165, 56, 96));
-        DefaultListCellRenderer renderer =  (DefaultListCellRenderer)myList.getCellRenderer();  
+        // creating scrollable lists
+        productList.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            productList.setBackground(new Color(165, 56, 96));
+            productList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
+            productList.setForeground(Color.WHITE);
+            productList.setSelectionBackground(Color.WHITE);
+            productList.setFixedCellHeight(30);
+            productList.setFixedCellWidth(300);
+        productList.setSelectionForeground(new Color(165, 56, 96));
+        DefaultListCellRenderer renderer =  (DefaultListCellRenderer)productList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
-        renderer.setVerticalAlignment(JLabel.CENTER);  
-        ColorButton selectButton = new ColorButton("Find recipes");
-        JScrollPane scrollPane = new JScrollPane(myList);
+        renderer.setVerticalAlignment(JLabel.CENTER); 
+
+        JScrollPane scrollPane = new JScrollPane(productList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setMinimumSize(new Dimension(300,400));
         scrollPane.setMaximumSize(new Dimension(300, 500));
@@ -84,27 +94,8 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
             }
         });
 
-        
-        mealName.setBackground(new Color(255, 238, 219));
-        mealName.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
-        mealName.setForeground(new Color(76, 59, 77));
-        mealName.setMargin(new Insets(5, 10, 5, 10));
-        mealName.setPreferredSize(new Dimension(200, 35));
-        JPanel textPanel = new JPanel(new GridLayout());
-        textPanel.add(mealName);
-        ColorButton findByNameButton = new ColorButton("Find by name");
-        window.setButton(findByNameButton, this);
-        JPanel findByNamePanel = new JPanel(new GridLayout());
-        findByNamePanel.add(findByNameButton);
-
-        ColorButton showDetailsButton = new ColorButton("Show details");
-        window.setButton(showDetailsButton, this);
-        
-        ColorButton removeFromFavButton = new ColorButton("Remove recipe");
-        window.setButton(removeFromFavButton, this);
-
         favRecipes.setSelectionMode(
-        ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         favRecipes.setBackground(new Color(165, 56, 96));
         favRecipes.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
         favRecipes.setForeground(Color.WHITE);
@@ -123,10 +114,24 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
                 this.thumbColor = new Color(76, 59, 77);
             }
         });
-        myList.setFixedCellHeight(30);
-        myList.setFixedCellWidth(300);
-        window.setButton(selectButton, this);
         
+        
+        // creating text field
+        mealName.setBackground(new Color(255, 238, 219));
+        mealName.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
+        mealName.setForeground(new Color(76, 59, 77));
+        mealName.setMargin(new Insets(5, 10, 5, 10));
+        mealName.setPreferredSize(new Dimension(200, 35));
+        JPanel findByNamePanel = new JPanel(new GridLayout());
+        findByNamePanel.add(findByNameButton);
+        
+        
+        // adding elements to RecipesPanel
+        GridBagConstraints e = new GridBagConstraints();
+        e.insets = new Insets(10, 10, 10, 10);
+        e.gridx = 0;
+        e.gridy = 0;
+        this.add(recipesLabelPanel, e);
         e.gridx = 0;
         e.gridy = 1;
         this.add(scrollPane, e);
@@ -154,7 +159,12 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         e.gridx = 1;
         e.gridy = 4;
         this.add(returnButtonPanel, e);
+
+
+        // updating product list
+        update_products();
     }
+
     public void update_products(){
         DataBase fridgeDB = window.fridgePanel.fridgeDB;
         model.clear();
@@ -232,7 +242,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         window.currentPanel.setVisible(true);
 
         java.util.List<String> s = new ArrayList<String>();
-        s = myList.getSelectedValuesList();
+        s = productList.getSelectedValuesList();
         rg.clear_ingredients();
         rg.clear_recipes();
         for (String string : s) {
