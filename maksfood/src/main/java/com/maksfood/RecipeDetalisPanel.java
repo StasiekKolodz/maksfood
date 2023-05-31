@@ -2,7 +2,6 @@ package com.maksfood;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import java.awt.*;
@@ -13,10 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
-import java.util.ArrayList;
-// import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
@@ -125,7 +120,6 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
             String text = String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, ing);
             ingredient_model.addElement(text);
         }
-        System.out.println(current_recipe.link_to_photo.toString());
         photo_url = new URL(current_recipe.link_to_photo);
         // URL photo_url = new URL(current_recipe.link_to_photo);
         BufferedImage image = ImageIO.read(photo_url);
@@ -140,17 +134,13 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     }
 
     public static boolean openWebpage(URI uri) {
-        System.out.println("theeereee");
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        System.out.println(desktop.toString());
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            System.out.println("theeereee3333333");
             try {
                 desktop.browse(uri);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("duuuuuuuuuuuupa");
             }
         }
         return false;
@@ -158,11 +148,9 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     
     public static boolean openWebpage(URL url) {
         try {
-            System.out.println("theeereee");
             return openWebpage(url.toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            System.out.println("duuuuuuuuuuuupa");
         }
         return false;
     }
@@ -180,7 +168,6 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     }
     if (e.getActionCommand().equals("See on website")) {
         try {
-            System.out.println("theeereee");
             openWebpage(new URL(current_recipe.link_to_recipe));
         } catch (MalformedURLException e1) {
             e1.printStackTrace();

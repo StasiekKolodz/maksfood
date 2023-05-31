@@ -6,23 +6,18 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import org.json.JSONArray;
 
 import com.maksfood.Ingredient.Unit;
-import com.mysql.cj.xdevapi.JsonArray;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.List;
-// import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class RecipesPanel extends RoundedPanel implements ActionListener {
     
     public MainWindow window;
-    // public JList<String> myList;
     DefaultListModel<String> model = new DefaultListModel<>();
     DefaultListModel<String> recipesModel = new DefaultListModel<>();
     JList<String> myList = new JList<>( model );
@@ -70,17 +65,13 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         myList.setSelectionMode(
                     ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         myList.setBackground(new Color(165, 56, 96));
-        // myList.setSize(200, 100);
         myList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
         myList.setForeground(Color.WHITE);
-        // myList.setFixedCellHeight(30);
-        // myList.setFixedCellWidth(120);
         myList.setSelectionBackground(Color.WHITE);
         myList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)myList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER);  
-        // renderer.set
         ColorButton selectButton = new ColorButton("Find recipes");
         JScrollPane scrollPane = new JScrollPane(myList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -95,14 +86,11 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
 
         
         mealName.setBackground(new Color(255, 238, 219));
-        // mealName.setMinimumSize(new Dimension(200, 200));
         mealName.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         mealName.setForeground(new Color(76, 59, 77));
         mealName.setMargin(new Insets(5, 10, 5, 10));
         mealName.setPreferredSize(new Dimension(200, 35));
-        // mealName.setBounds(100, 100, 100, 100);
         JPanel textPanel = new JPanel(new GridLayout());
-        // textPanel.setSize(200, 200);
         textPanel.add(mealName);
         ColorButton findByNameButton = new ColorButton("Find by name");
         window.setButton(findByNameButton, this);
@@ -116,13 +104,10 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         window.setButton(removeFromFavButton, this);
 
         favRecipes.setSelectionMode(
-            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            favRecipes.setBackground(new Color(165, 56, 96));
-            // myList.setSize(200, 100);
+        ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        favRecipes.setBackground(new Color(165, 56, 96));
         favRecipes.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
         favRecipes.setForeground(Color.WHITE);
-        // myList.setFixedCellHeight(30);
-        // myList.setFixedCellWidth(120);
         favRecipes.setSelectionBackground(Color.WHITE);
         favRecipes.setSelectionForeground(new Color(165, 56, 96));
         favRecipes.setFixedCellHeight(30);
@@ -138,7 +123,6 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
                 this.thumbColor = new Color(76, 59, 77);
             }
         });
-        // scrollPane.setVerticalScrollBar(scrollBar);
         myList.setFixedCellHeight(30);
         myList.setFixedCellWidth(300);
         window.setButton(selectButton, this);
@@ -175,8 +159,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         DataBase fridgeDB = window.fridgePanel.fridgeDB;
         model.clear();
         fridgeDB.sqlSelect("select * from maksfood.fridge");
-        Vector<String> fridgeElements = fridgeDB.getElements(100, 2);
-        // forfridgeElements.size()
+        Vector<String> fridgeElements = fridgeDB.getElements(2);
         for (String elem : fridgeElements) {
             model.addElement(elem);
         }
@@ -194,23 +177,17 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         DataBase recipeDB = window.fridgePanel.fridgeDB;
         recipeDB.sqlSelect("select name from maksfood.favourite_recipe");
         Vector<String> recipesNameElements = recipeDB.getElements(1);
-        System.out.println(recipesNameElements.toString());
         recipeDB.sqlSelect("select ingredients from maksfood.favourite_recipe");
         Vector<String> ingredientsNameElements = recipeDB.getElements(1);
-        System.out.println(ingredientsNameElements.toString());
         recipeDB.sqlSelect("select photo_link from maksfood.favourite_recipe");
         Vector<String> photo_links = recipeDB.getElements(1);
-        System.out.println(photo_links.toString());
         recipeDB.sqlSelect("select recipe_link from maksfood.favourite_recipe");
         Vector<String> url_to_recipes = recipeDB.getElements(1);
-        System.out.println(url_to_recipes.toString());
         for(int i = 0; i < recipesNameElements.size(); i++){
             Recipe recipe = new Recipe();
             recipe.recipe_text = recipesNameElements.get(i);
-            // String[] splitted_ingredient_list = ingredientsNameElements.get(i).split(",");
             String formatted_string = ingredientsNameElements.get(i).replace("[[", "[");
             String second_format_string = formatted_string.replace("]]", "]");
-            System.out.println(second_format_string);
             JSONArray ja = new JSONArray("["+second_format_string+"]");
             for(int j=0;j < ja.length(); j++){
                 recipe.ingredient_lines.add(ja.getString(j));
@@ -258,12 +235,10 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         s = myList.getSelectedValuesList();
         rg.clear_ingredients();
         rg.clear_recipes();
-        System.out.print(s);
         for (String string : s) {
             Ingredient i = new Ingredient(string, Ingredient.Unit.amount, 5);
             rg.add_ingredient(i);
         }
-        System.out.print(rg.ingredient_list);
         rg.send_request_to_api();
         update_recipes();
     }

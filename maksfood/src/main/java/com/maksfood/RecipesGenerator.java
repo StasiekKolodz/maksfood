@@ -78,12 +78,6 @@ public class RecipesGenerator {
             rec.link_to_recipe = recipe_url;
             recipes_list.add(rec);
         }
-        // System.out.println(o.toString());
-        // System.out.println(recipes_list.get(0).recipe_text + ":");
-        // for(int i = 0; i < recipes_list.get(0).ingredient_lines.size(); i++){
-        //     System.out.println(recipes_list.get(0).ingredient_lines.get(i));
-        // }
-        // System.out.println(recipes_list.get(0));
 
             }
             catch (Exception e){

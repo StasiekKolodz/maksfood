@@ -6,7 +6,6 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 
 public class ListContainer{

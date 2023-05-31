@@ -47,9 +47,6 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
 
         updateListsList();
         setLayout();
-
-        setListAppearance(listsList.list);
-        setListAppearance(shoppingList.list);
     }
 
     public void setLayout(){
@@ -78,18 +75,9 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         this.add(returnButtonPanel, e);
     }
 
-
-    public void setListAppearance(JList<String> list){
-
-        // TODO use template
-        // list.setForeground(new Color(165, 56, 96));
-        // list.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
-        // list.setBackground(new Color(255, 238, 219));
-    }
-
     public void updateList(String selectedValue){
         shoppingDB.sqlSelect("SELECT * from maksfood.shoppingList WHERE parent_list='"+selectedValue+"'");
-        listElements = shoppingDB.getElements(10, 2);
+        listElements = shoppingDB.getElements(2);
 
         shoppingList.list.setListData(listElements);
         shoppingList.list.setSelectedIndex(0);
@@ -100,7 +88,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         String selectedItem = listsList.listModel.getElementAt(selectedIndex);
 
         shoppingDB.sqlSelect("SELECT * from maksfood.shoppingList WHERE parent_list='"+selectedItem+"'");
-        listElements = shoppingDB.getElements(10, 2);
+        listElements = shoppingDB.getElements(2);
         shoppingList.list.setListData(listElements);
         shoppingList.list.setSelectedIndex(0);
     }
@@ -108,7 +96,7 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
     public void updateListsList(){
 
         shoppingDB.sqlSelect("SELECT * from maksfood.listsList");
-        listElements = shoppingDB.getElements(30, 2);
+        listElements = shoppingDB.getElements(2);
         listsList.listModel.clear();
         listsList.listModel.addAll(listElements);
     }
@@ -146,17 +134,12 @@ public class ShoppingPanel extends RoundedPanel implements ActionListener, ListS
         }
     }
         else if(src == shoppingList.removeButton){
-            System.out.print("a !");
             int selectedIndexSh = shoppingList.list.getSelectedIndex();
             int selectedIndex = listsList.list.getSelectedIndex();
-            System.out.print("b !");
                 if (selectedIndexSh != -1) {
-                    System.out.print(selectedIndexSh);
                     String selectedItemSh = shoppingList.list.getSelectedValue();
-                    System.out.print("x !");
                     String selectedItem = listsList.listModel.getElementAt(selectedIndex);
                     // Remove the selected item from the second list
-                    System.out.print("d !");
                     deleteSelectedElement(selectedItemSh, selectedItem);
                     
         }
