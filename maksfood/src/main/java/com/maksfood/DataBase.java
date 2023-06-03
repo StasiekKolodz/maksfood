@@ -4,21 +4,12 @@ import java.sql.*;
 import java.util.Vector;
 
 public class DataBase {
-    // public Vector<String> elements = new Vector<String>();
     String current;
     public Connection con;
     public Statement stmt;
     public ResultSet rs;
-    // public static void main(String args[]){
-    //     DataBase db = new DataBase();
-
-    //     db.connect("3306", "new_schema", "root", "mysql");
-    //     db.sqlSelect("select * from new_schema.new_table");
-    //     System.out.println(db.getElements(5, 2));
-    // }
     public boolean connect(String port, String db_name, String username, String password){
-        try{  
-            // Class.forName("com.mysql.jdbc.Driver");  
+        try{   
             con = DriverManager.getConnection(  
             "jdbc:mysql://localhost:" + port +"/" + db_name, username, password);  
             stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,  
@@ -104,8 +95,6 @@ public class DataBase {
 
         Vector<String> elements = new Vector<String>();
 
-        // elements.clear();
-        
         try{
         rs.absolute(row_number);
         for(int i = from_column; i<=to_column; i++){
@@ -115,7 +104,8 @@ public class DataBase {
         }
         catch(Exception e){ 
             System.out.println(e);
-            System.out.println("GETTING DB ROW FAILED");}
+            System.out.println("GETTING DB ROW FAILED");
+        }
         return elements;
     }
     public void fixIds(int deletedId){
@@ -163,6 +153,21 @@ public class DataBase {
         return count;
     }
 
+    public int CountRS(){
+        int size =0;
+        try{
+            if (rs != null) 
+            {
+            rs.last();
+            size = rs.getRow();
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            System.out.println("COUNTING RESULT SET FAILED");
+        }
+        return size;
+    }
+
     public int getRowsCountExpiredProds(boolean isExpired){
         int count = -1;
         if(isExpired){
@@ -175,7 +180,7 @@ public class DataBase {
         }
         catch(Exception e){
             System.out.println(e);
-            System.out.println("wyjbeloa sie DB COUNT FAILED");
+            System.out.println("DB COUNT FAILED");
         }
         }
         else{
@@ -188,7 +193,7 @@ public class DataBase {
             }
             catch(Exception e){
                 System.out.println(e);
-                System.out.println("wyjeablo si DB COUNT FAILED");
+                System.out.println("DB COUNT FAILED");
             }
         }
         //Executing the query

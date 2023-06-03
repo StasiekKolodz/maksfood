@@ -11,7 +11,6 @@ public class Ingredient {
     private float float_amount;
 
     public Ingredient(String name, Unit unit, int amount) {
-        //TODO: exception when kg or liter unit
         this.name = name;
         this.unit = unit;
         this.integer_amount = amount;
@@ -19,7 +18,6 @@ public class Ingredient {
     }
 
     public Ingredient(String name, Unit unit, float amount) {
-        //TODO: exception whem amount unit
         this.name = name;
         this.unit = unit;
         this.integer_amount = 0;
@@ -27,32 +25,26 @@ public class Ingredient {
     }
 
     public void increaseAmount(int amount){
-        //TODO: exception when kg or liter unit
         this.integer_amount += amount;
     }
 
     public void increaseAmount(float amount){
-        //TODO: exception whem amount unit
         this.float_amount += amount;
     }
     
     public void decreaseAmount(int amount){
-        //TODO: exception when kg or liter unit
         this.integer_amount -= amount;
     }
 
     public void decreaseAmount(float amount){
-        //TODO: exception whem amount unit
         this.float_amount -= amount;
     }
 
     public void changeAmount(int new_amount){
-        //TODO: exception when kg or liter unit
         this.integer_amount = new_amount;
     }
 
     public void changeAmount(float new_amount){
-        //TODO: exception whem amount unit
         this.float_amount = new_amount;
     }
 

@@ -2,7 +2,6 @@ package com.maksfood;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import java.awt.*;
@@ -13,10 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
-import java.util.ArrayList;
-// import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
@@ -39,7 +34,7 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         recipesLabel.setForeground(new Color(165, 56, 96));
         recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
 
-        // creating return button
+        // creating buttons
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
 
@@ -57,26 +52,23 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
         returnButtonPanel.add(returnButton);
         recipesLabelPanel.setBounds(getVisibleRect());
         
+        // setting panels visual sides
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
         
+        // configuring scroll Panel and product list
         ingredientList.setSelectionMode(
             ListSelectionModel.SINGLE_SELECTION);
         ingredientList.setBackground(new Color(165, 56, 96));
-        // ingredientList.setSize(200, 100);
         ingredientList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 17));
         ingredientList.setForeground(Color.WHITE);
-        // ingredientList.setFixedCellHeight(60);
         ingredientList.setFixedCellWidth(400);
         ingredientList.setSelectionBackground(Color.WHITE);
         ingredientList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)ingredientList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
-        // renderer.setBounds(20, 20, 20, 20);
 
-        // renderer.setBorder(new EmptyBorder(100, 100, 100, 100));
-        // ingredient_model.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
         ingredientList.setCellRenderer(renderer);
         ingredientScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         ingredientScrollPane.setMinimumSize(new Dimension(400,100));
@@ -87,6 +79,7 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
                 this.thumbColor = new Color(76, 59, 77);
             }
         });
+
         // adding elements to RecipesPanel
         GridBagConstraints e = new GridBagConstraints();
         e.insets = new Insets(10, 10, 10, 10);
@@ -117,39 +110,31 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     }
 
     public void update_details(Recipe current_recipe) throws IOException{
-        // current_recipe = window.recipesPanel.rg.recipes_list.get(index);
         this.current_recipe = current_recipe;
         ingredient_model.clear();
         for (String ing : current_recipe.ingredient_lines) {
             String text = String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, ing);
             ingredient_model.addElement(text);
         }
-        System.out.println(current_recipe.link_to_photo.toString());
         photo_url = new URL(current_recipe.link_to_photo);
-        // URL photo_url = new URL(current_recipe.link_to_photo);
         BufferedImage image = ImageIO.read(photo_url);
         ImageIcon ii = new ImageIcon(image);
         photo.setIcon(ii);
 
         recipesLabel.setText(String.format("<html><div WIDTH=%d style="+"text-align: center"+">%s</div></html>", 400, current_recipe.recipe_text));
         recipesLabel.setHorizontalAlignment(JLabel.CENTER);
-        // ingredientList.setModel(ingredient_model);
         
 
     }
 
     public static boolean openWebpage(URI uri) {
-        System.out.println("theeereee");
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        System.out.println(desktop.toString());
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            System.out.println("theeereee3333333");
             try {
                 desktop.browse(uri);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("duuuuuuuuuuuupa");
             }
         }
         return false;
@@ -157,11 +142,9 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     
     public static boolean openWebpage(URL url) {
         try {
-            System.out.println("theeereee");
             return openWebpage(url.toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            System.out.println("duuuuuuuuuuuupa");
         }
         return false;
     }
@@ -179,7 +162,6 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
     }
     if (e.getActionCommand().equals("See on website")) {
         try {
-            System.out.println("theeereee");
             openWebpage(new URL(current_recipe.link_to_recipe));
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
@@ -192,11 +174,7 @@ public class RecipeDetalisPanel extends RoundedPanel implements ActionListener {
             window.shoppingPanel.shoppingDB.sqlUpdate("INSERT INTO maksfood.shoppingList VALUES(DEFAULT,'"
             +s+"','"+"1"+"','"+current_recipe.recipe_text+"');");
         }
-        // window.shoppingPanel.updateListsList();
-        // window.shoppingPanel.updateList();
     }
-    
-    
     
 }
 }

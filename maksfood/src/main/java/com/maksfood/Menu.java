@@ -3,7 +3,6 @@ package com.maksfood;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.event.ActionEvent;
@@ -32,7 +31,6 @@ public class Menu extends RoundedPanel implements ActionListener{
             button1 = new ColorButton("My Fridge");
             button2 = new ColorButton("Recipes");
             button3 = new ColorButton("Plan shopping");
-            // DefaultLabel dateTimeLabel = displayExpData();
             
             // Set button properties
             window.setButton(button1, this);
@@ -101,7 +99,6 @@ public class Menu extends RoundedPanel implements ActionListener{
 
         public String displayExpData(){
             DefaultLabel currentStatus = new DefaultLabel("Date");
-            // dateTimeLabel.setText("Hello! Today is " + time.dateFormat);
             int expiredCount = DB.getRowsCountExpiredProds(false);
             String expiredCountStr = Integer.toString(expiredCount);
             if(expiredCount == 1){
@@ -139,7 +136,6 @@ public class Menu extends RoundedPanel implements ActionListener{
             } else if (e.getActionCommand().equals("Plan shopping")) {
 
                 window.currentPanel.setVisible(false);
-                // window.shoppingPanel.updateList();
                 window.shoppingPanel.updateListsList();
                 window.currentPanel = window.shoppingPanel;
                 window.getContentPane().add(window.currentPanel);

@@ -1,5 +1,6 @@
 package com.maksfood;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -63,14 +64,13 @@ public class Expiration {
         }
         catch(Exception e){
             return 0;
-        }
+            }
         }
 
-        public void updateExpired(){
-            int count = DB.getRowsCountFridge(); 
+        public void updateExpired() throws SQLException{
             DB.sqlSelect("SELECT * from maksfood.fridge WHERE name NOT IN (SELECT name from maksfood.expiredProducts)");
-            Vector<String> prodExpDates = DB.getElements(count, 4);
-            Vector<String> prodNames = DB.getElements(count, 2);
+            Vector<String> prodExpDates = DB.getElements(4);
+            Vector<String> prodNames = DB.getElements(2);
             Vector<String> expiredProds = new Vector<String>();
             for(int i = 0; i < prodExpDates.size(); i++){
                 String prodDate = prodExpDates.get(i);
@@ -88,11 +88,12 @@ public class Expiration {
             DB.sqlSelect("SELECT * from maksfood.fridge WHERE name NOT IN (SELECT name from maksfood.expiredProducts)");
             Vector<String> prodExpDates = new Vector<String>();
             Vector<String> prodNames = new Vector<String>();
-            for(int i=0; i<30; i++){
+            int count = DB.CountRS();
+            for(int i=1; i<=count; i++){
                 Vector<String> prodData = DB.getRow(i, 2, 4);
                 if(prodData.size()!=0){
-                prodExpDates.add(prodData.elementAt(2));
-                prodNames.add(prodData.elementAt(0));
+                    prodExpDates.add(prodData.elementAt(2));
+                    prodNames.add(prodData.elementAt(0));
                 }
             }
             
@@ -100,7 +101,6 @@ public class Expiration {
                 String prodDate = prodExpDates.get(i);
                 long prodDateSec = convertDateToSeconds(prodDate);
                 // check if the exp date is in 3 days
-                System.out.println(this.currTimeSecs);
                 if(0 < prodDateSec - this.currTimeSecs &&  prodDateSec - this.currTimeSecs < 259200){
                     aboutToExpire.add(prodNames.get(i));
                     aboutToExpire.add(prodNames.get(i));

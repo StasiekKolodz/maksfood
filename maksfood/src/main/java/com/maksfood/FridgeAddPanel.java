@@ -35,9 +35,7 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
 
         ColorButton returnButton = new ColorButton("Return");
         ColorButton addButton = new ColorButton("Add");
-        // ColorButton deleteButton = new ColorButton("Delete");
         window.setButton(returnButton,this);
-        // window.setButton(deleteButton,this);
         window.setButton(addButton,this);
         
         //creating button and label panels
@@ -51,14 +49,12 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         fridgeAddLabelPanel.setOpaque(false);
         JPanel returnButtonPanel = new JPanel(new GridLayout());
         JPanel addButtonPanel = new JPanel(new GridLayout());
-        // JPanel deleteButtonPanel = new JPanel(new GridLayout());
         fridgeAddLabelPanel.add(fridgeLabel);
         returnButtonPanel.add(returnButton);
         addButtonPanel.add(addButton);
         amountLabelPanel.add(amountLabel);
         nameLabelPanel.add(nameLabel);
         expDateLabelPanel.add(expDateLabel);
-        // deleteButtonPanel.add(deleteButton);
         fridgeAddLabelPanel.setBounds(getVisibleRect());
         nameLabelPanel.setBounds(getVisibleRect());
        

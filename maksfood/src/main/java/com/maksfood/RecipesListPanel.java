@@ -6,10 +6,6 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
-import java.util.ArrayList;
-// import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class RecipesListPanel extends RoundedPanel implements ActionListener {
@@ -27,7 +23,7 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         recipesLabel.setForeground(new Color(165, 56, 96));
         recipesLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
 
-        // creating return button
+        // creating buttons
         ColorButton returnButton = new ColorButton("Return");
         window.setButton(returnButton, this);
 
@@ -45,13 +41,14 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         returnButtonPanel.add(returnButton);
         recipesLabelPanel.setBounds(getVisibleRect());
         
+        // configuring panel visual sides
         setOpaque(false);
-        setBackground(new Color(255, 238, 219));
+        setBackground(new Color(255, 238, 219, 200));
 
+        // adding list of product in recipe
         recipeList.setSelectionMode(
             ListSelectionModel.SINGLE_SELECTION);
         recipeList.setBackground(new Color(165, 56, 96));
-        // recipeList.setSize(200, 100);
         recipeList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 17));
         recipeList.setForeground(Color.WHITE);
         recipeList.setFixedCellHeight(30);
@@ -61,7 +58,6 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)recipeList.getCellRenderer();  
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
-
         JScrollPane recipeScrollList = new JScrollPane(recipeList);
         recipeScrollList.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
@@ -126,9 +122,6 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
         window.currentPanel.setVisible(true);
     }
     if (e.getActionCommand().equals("Add to favourite")) {
-
-        // window.currentPanel.setVisible(false);
-        // System.out.println("sthasdas");
         int recipe_index = recipeList.getSelectedIndex();
         Recipe chosen_recipe = window.recipesPanel.rg.recipes_list.get(recipe_index);
         String ingredients = "";
@@ -142,8 +135,6 @@ public class RecipesListPanel extends RoundedPanel implements ActionListener {
             }
         }
         String replaced = ingredients.replace("\'", "\\"+"\'");
-        // String removing_stars = replaced.replace("*", "\\"+"*");
-        System.out.println("xxxxxxxxxxxx"+replaced);
         window.dataBase.sqlUpdate("INSERT INTO maksfood.favourite_recipe VALUES(DEFAULT,'"+
         chosen_recipe.recipe_text.replace("\'", "\\"+"\'") + "','" + replaced + "','" + chosen_recipe.link_to_photo
         + "','" + chosen_recipe.link_to_recipe + "');");
