@@ -93,9 +93,9 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         e.gridy = 8;
         this.add(addButtonPanel, e);
 
-        nameTextField = new JTextField("", 16);
-        amountTextField = new JTextField("", 16);
-        expDateTextField = new JTextField("", 16);
+        nameTextField = new JTextField("Type item name here", 16);
+        amountTextField = new JTextField("Type amount of item here", 16);
+        expDateTextField = new JTextField("YY-MM-DD", 16);
         e.gridx = 0;
         e.gridy = 3;
         e.gridwidth = 2;

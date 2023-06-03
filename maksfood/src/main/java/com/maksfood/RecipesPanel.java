@@ -26,6 +26,8 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     public ListModel<String> d;
     public JTextField mealName = new JTextField();
     List<Recipe> fav_recipes_list = new ArrayList<Recipe>();
+    Vector<String> expiredProductNames;
+    Vector<String> aboutToExpire;
     
     
     public RecipesPanel(LayoutManager layout, int r, MainWindow w) {
@@ -165,13 +167,44 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         update_products();
     }
 
-    public void update_products(){
+    // public void update_products(){
+    //     DataBase fridgeDB = window.fridgePanel.fridgeDB;
+    //     model.clear();
+    //     fridgeDB.sqlSelect("select * from maksfood.fridge");
+    //     Vector<String> fridgeElements = fridgeDB.getElements(2);
+    //     fridgeDB.sqlSelect("SELECT * from maksfood.fridge");
+    //     Vector<String> expiredProds = fridgeDB.getElements(2);
+    //     for (String elem : fridgeElements) {
+    //         model.addElement(elem);
+    //     }
+    // }
+
+    public void update_products() {
         DataBase fridgeDB = window.fridgePanel.fridgeDB;
+        fridgeDB.sqlSelect("SELECT * FROM maksfood.expiredProducts WHERE isExpired=1");
+        expiredProductNames = fridgeDB.getElements(2);
+        fridgeDB.sqlSelect("SELECT * FROM maksfood.expiredProducts WHERE isExpired=0");
+        aboutToExpire = fridgeDB.getElements(2);
+    
         model.clear();
-        fridgeDB.sqlSelect("select * from maksfood.fridge");
+        
+        fridgeDB.sqlSelect("SELECT * FROM maksfood.fridge");
         Vector<String> fridgeElements = fridgeDB.getElements(2);
+
         for (String elem : fridgeElements) {
             model.addElement(elem);
+    
+            // Check if the product name appears in the expired product names
+            if (expiredProductNames.contains(elem)) {
+                int lastIndex = model.getSize() - 1;
+                productList.setSelectionInterval(lastIndex, lastIndex);
+                productList.setCellRenderer(new HighlightedProductCellRenderer());
+            }
+            else if (aboutToExpire.contains(elem)) {
+                int lastIndex = model.getSize() - 1;
+                productList.setSelectionInterval(lastIndex, lastIndex);
+                productList.setCellRenderer(new HighlightedProductCellRenderer());
+            }
         }
     }
 
@@ -286,4 +319,51 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         window.currentPanel.setVisible(true);
     }
 }
+
+class HighlightedProductCellRenderer extends DefaultListCellRenderer {
+    private final Color HIGHLIGHT_COLOR_EX = new Color(150, 0, 0, 100);
+    private final Color HIGHLIGHT_COLOR_NOT_EX = new Color(255, 215, 0, 200);
+
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                  boolean isSelected, boolean cellHasFocus) {
+        Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+        // Check if the product name is expired
+        if (value != null && expiredProductNames.contains(value.toString())) {
+            renderer.setBackground(HIGHLIGHT_COLOR_EX);
+            if (isSelected) {
+            renderer.setForeground(Color.RED);
+            renderer.setBackground(Color.WHITE);
+            } else {
+            renderer.setForeground(Color.WHITE);
+            }
+        
+        }
+        // render for a product about to expire
+        else if (value != null && aboutToExpire.contains(value.toString())) {
+            renderer.setBackground(HIGHLIGHT_COLOR_NOT_EX);
+            if (isSelected) {
+            renderer.setForeground(Color.ORANGE);
+            renderer.setBackground(Color.WHITE);
+            } else {
+            renderer.setForeground(Color.WHITE);
+            }
+        
+        }
+        else {
+            // Set the default background color for non-expired product names
+            renderer.setBackground(productList.getBackground());
+            if (isSelected) {
+                renderer.setForeground(productList.getBackground());
+                renderer.setBackground(Color.WHITE);
+                } else {
+                renderer.setForeground(Color.WHITE);
+                }
+        }
+        return renderer;
+    }
 }
+
+}
+
