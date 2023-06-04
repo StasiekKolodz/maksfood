@@ -1,6 +1,8 @@
 package com.maksfood;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import org.json.JSONArray;
@@ -9,13 +11,15 @@ import com.maksfood.Ingredient.Unit;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class RecipesPanel extends RoundedPanel implements ActionListener {
+public class RecipesPanel extends RoundedPanel implements ActionListener{
     
     public MainWindow window;
     DefaultListModel<String> model = new DefaultListModel<>();
@@ -26,12 +30,42 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     public ListModel<String> d;
     public JTextField mealName = new JTextField();
     List<Recipe> fav_recipes_list = new ArrayList<Recipe>();
+    List<Boolean> selection_list = new ArrayList<Boolean>();
     
     
     public RecipesPanel(LayoutManager layout, int r, MainWindow w) {
         super(layout, r);
         window = w;
-        
+        productList.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        productList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                productList.clearSelection();
+                int index = productList.locationToIndex(e.getPoint());
+                if(selection_list.get(index)==false) selection_list.set(index, true);
+                else selection_list.set(index, false);
+                System.out.println(selection_list.toString());
+                int how_many = 0;
+                for(int i = 0; i<model.size(); i++){
+                if(selection_list.get(i)){
+                    how_many++;
+                }
+                }
+                int[] sel = new int[how_many];
+                how_many =0;
+                for(int i = 0; i<model.size(); i++){
+                    if(selection_list.get(i)){
+                        sel[how_many] = i;
+                        how_many++;
+                    }
+                    }
+
+            productList.setSelectedIndices(sel);
+        }
+
+        });
+
         // creating label
         DefaultLabel recipesLabel = new DefaultLabel("Your products",25);
         DefaultLabel favRecipesLabel = new DefaultLabel("Favourite recipes",25);
@@ -52,7 +86,6 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         ColorButton findByNameButton = new ColorButton("Find by name");
         window.setButton(findByNameButton, this);
 
-
         // creating button and label panels
         JPanel recipesLabelPanel = new JPanel(new GridLayout());
         recipesLabelPanel.setOpaque(false);
@@ -70,8 +103,6 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         
 
         // creating scrollable lists
-        productList.setSelectionMode(
-            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             productList.setBackground(new Color(165, 56, 96));
             productList.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
             productList.setForeground(Color.WHITE);
@@ -95,7 +126,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         });
 
         favRecipes.setSelectionMode(
-            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         favRecipes.setBackground(new Color(165, 56, 96));
         favRecipes.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 20));
         favRecipes.setForeground(Color.WHITE);
@@ -180,6 +211,13 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         for (Recipe r : rg.recipes_list) {
             window.recipesListPanel.recipe_model.addElement(r.recipe_text);
         }
+    }
+    public void update_selection_list(){
+        selection_list.clear();
+        for(int i = 0; i<model.size(); i++){
+            selection_list.add(i, false);
+        }
+
     }
 
     public void update_fav_recipes_from_db(){
@@ -286,4 +324,5 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         window.currentPanel.setVisible(true);
     }
 }
+
 }
