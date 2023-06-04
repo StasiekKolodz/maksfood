@@ -20,18 +20,18 @@ public class FridgeAddPanel extends RoundedPanel implements ActionListener{
         window = w;
         expiration = exp;
         DB = dataBase;
-        JLabel fridgeLabel = new JLabel("Add item to fridge");
-        JLabel nameLabel = new JLabel("Item Name");
-        JLabel amountLabel = new JLabel("Amount");
-        JLabel expDateLabel = new JLabel("Expiry Date");
+        JLabel fridgeLabel = new DefaultLabel("Add item to fridge");
+        JLabel nameLabel = new DefaultLabel("Item Name");
+        JLabel amountLabel = new DefaultLabel("Amount");
+        JLabel expDateLabel = new DefaultLabel("Expiry Date");
 
 
         fridgeLabel.setForeground(new Color(165, 56, 96));
-        fridgeLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 30));
+        fridgeLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 40));
 
-        nameLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
-        amountLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
-        expDateLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
+        nameLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 25));
+        amountLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 25));
+        expDateLabel.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 25));
 
         ColorButton returnButton = new ColorButton("Return");
         ColorButton addButton = new ColorButton("Add");

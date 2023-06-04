@@ -20,7 +20,7 @@ public class ListContainer{
         this.listPanel = new JPanel();
         this.listPanel.setLayout(new BorderLayout());
 
-        this.textField = new JTextField();
+        this.textField = new JTextField("");
 
         this.listModel = new DefaultListModel<>();
         
