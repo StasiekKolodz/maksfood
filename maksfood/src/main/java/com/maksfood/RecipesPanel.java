@@ -24,7 +24,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     JList<String> favRecipes = new JList<>( recipesModel );
     public RecipesGenerator rg = new RecipesGenerator();
     public ListModel<String> d;
-    public JTextField mealName = new JTextField();
+    public JTextField mealName = new JTextField("Search recipe by name");
     List<Recipe> fav_recipes_list = new ArrayList<Recipe>();
     Vector<String> expiredProductNames;
     Vector<String> aboutToExpire;
@@ -122,10 +122,11 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         mealName.setBackground(new Color(255, 238, 219));
         mealName.setFont(new Font("DejaVu Serif Condensed", Font.BOLD, 15));
         mealName.setForeground(new Color(76, 59, 77));
-        mealName.setMargin(new Insets(5, 10, 5, 10));
+        mealName.setMargin(new Insets(10, 5, 10, 5));
         mealName.setPreferredSize(new Dimension(200, 35));
         JPanel findByNamePanel = new JPanel(new GridLayout());
         findByNamePanel.add(findByNameButton);
+        findByNamePanel.add(mealName);
         
         
         // adding elements to RecipesPanel
@@ -145,9 +146,9 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
         this.add(recipeScrollPane, e);
         e.gridx = 0;
         e.gridy = 3;
-        this.add(textPanel,e);
-        e.gridx = 0;
-        e.gridy = 4;
+        // this.add(textPanel,e);
+        // e.gridx = 0;
+        // e.gridy = 3;
         this.add(findByNamePanel,e);
         e.gridx = 1;
         e.gridy = 0;
