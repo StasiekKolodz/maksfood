@@ -11,7 +11,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.util.Vector;
 
-
 public class FridgePanel extends RoundedPanel implements ActionListener{
 
 

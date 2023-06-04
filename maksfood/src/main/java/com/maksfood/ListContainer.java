@@ -15,7 +15,6 @@ public class ListContainer{
     public DefaultListModel<String> listModel;
     public ColorButton addButton;
     public ColorButton removeButton;
-
     public ListContainer(ListSelectionListener listener, ActionListener aListener){
         this.listPanel = new JPanel();
         this.listPanel.setLayout(new BorderLayout());

@@ -1,6 +1,8 @@
 package com.maksfood;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import org.json.JSONArray;
@@ -26,6 +28,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     public ListModel<String> d;
     public JTextField mealName = new JTextField();
     List<Recipe> fav_recipes_list = new ArrayList<Recipe>();
+    public int[] setSelectedIndices;
     
     
     public RecipesPanel(LayoutManager layout, int r, MainWindow w) {
@@ -80,6 +83,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
             productList.setFixedCellWidth(300);
         productList.setSelectionForeground(new Color(165, 56, 96));
         DefaultListCellRenderer renderer =  (DefaultListCellRenderer)productList.getCellRenderer();  
+
         renderer.setHorizontalAlignment(JLabel.CENTER);  
         renderer.setVerticalAlignment(JLabel.CENTER); 
 
@@ -185,7 +189,7 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     public void update_fav_recipes_from_db(){
         fav_recipes_list.clear();
         DataBase recipeDB = window.fridgePanel.fridgeDB;
-        recipeDB.sqlSelect("select name from maksfood.favourite_recipe");
+        recipeDB.sqlSelect("select name from maksfood.favourite_recipe ORDER BY name");
         Vector<String> recipesNameElements = recipeDB.getElements(1);
         recipeDB.sqlSelect("select ingredients from maksfood.favourite_recipe");
         Vector<String> ingredientsNameElements = recipeDB.getElements(1);
@@ -216,9 +220,9 @@ public class RecipesPanel extends RoundedPanel implements ActionListener {
     }
 
     public void deleteSelectedElement(){
-        int index = favRecipes.getSelectedIndex();
-        window.fridgePanel.fridgeDB.sqlUpdate("DELETE FROM maksfood.favourite_recipe WHERE id=" + Integer.toString(index+1));
-        window.fridgePanel.fridgeDB.fixFavouriteRecipesIds(index+1);
+        String name = favRecipes.getSelectedValue();
+        window.fridgePanel.fridgeDB.sqlUpdate("DELETE FROM maksfood.favourite_recipe WHERE name='" + name + "'");
+        // window.fridgePanel.fridgeDB.fixFavouriteRecipesIds(index+1);
         update_fav_recipes_from_db();
         update_favourite_recipes();
     }
