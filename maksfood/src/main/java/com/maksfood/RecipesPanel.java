@@ -1,8 +1,6 @@
 package com.maksfood;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import org.json.JSONArray;
