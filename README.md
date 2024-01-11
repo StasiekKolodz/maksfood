@@ -28,7 +28,7 @@ Użytkownik ma do dyspozycji przycisk dodania przepisu do ulubionych. Użycie go
 
 ### 3. Asystent lodówki
 
-Użytkownik ma możliwość dodania posiadanych produktów do bazy danych. Gdy zbliżać się będzie termin ważności produktów, aplikacja wyśle powiadomienie push z przypomnieniem, aby zapobiec marnowaniu żywności. Po przekroczeniu terminu ważności wyświetlane będą powiadomienia przypominające o konieczności wyrzucenia danego produktu.
+Użytkownik ma możliwość dodania posiadanych produktów do bazy danych. Gdy zbliżać się będzie termin ważności produktów, aplikacja wyświetli powiadomienie z przypomnieniem, aby zapobiec marnowaniu żywności. Po przekroczeniu terminu ważności wyświetlane będą powiadomienia przypominające o konieczności wyrzucenia danego produktu.
 
 ### 4. Lista zakupów
 
