@@ -1,6 +1,6 @@
 # WYSZUKIWARKA PRZEPISÓW
 
-## Grupa nr. 3:
+## Autorzy:
 1. Krystian Czechowicz
 2. Stanisław Kołodziejczyk
 3. Michał Nowakowski
